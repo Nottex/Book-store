@@ -1,0 +1,43 @@
+.book-card {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  max-width: 350px;
+}
+
+.book-card__image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+}
+
+.book-card__image img {
+  width: 50%;
+  margin: 50px 0;
+}
+
+.book-card__title {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 22px;
+  margin-top: 10px;
+}
+
+.book-card__info {
+  margin-top: 35px;
+  color: gray;
+  font-size: 18px;
+}
+
+.book-card__features {
+  margin-top: 35px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.book-card__features__price {
+  font-size: 20px;
+  font-weight: bold;
+}
