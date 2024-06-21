@@ -1,3 +1,3 @@
-export interface IBookState {
+export interface IBooksState {
   list: object[]
 }
