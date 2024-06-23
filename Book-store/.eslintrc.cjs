@@ -27,6 +27,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    'import/no-absolute-path': 0
+    'import/no-absolute-path': 0,
+    'no-useless-return': 0
   },
 }

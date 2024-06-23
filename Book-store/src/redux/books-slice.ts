@@ -33,7 +33,16 @@ export const booksSlice = createSlice({
   name: 'books',
   initialState,
   reducers: {
+    toggleFavouriteById: (state, action) => {
+      const id = action.payload
 
+      const index = state.list.findIndex((book) => book.id === id)
+
+      state.list[index].isFavourite = !state.list[index].isFavourite
+
+      // if(localStorage)
+      // localStorage.setItem('data', JSON.stringify(state.list))
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -43,7 +52,7 @@ export const booksSlice = createSlice({
       .addCase(fetchNewBooks.fulfilled, (state, action) => {
         state.isLoading = false
         state.list = action.payload.books.map((book) => {
-          return { ...book, isFavorite: false }
+          return { ...book, id: book.isbn13, isFavourite: false }
         })
       })
       .addCase(fetchNewBooks.rejected, (state, action) => {
@@ -52,5 +61,7 @@ export const booksSlice = createSlice({
       })
   }
 })
+
+export const { toggleFavouriteById } = booksSlice.actions
 
 export const booksReducer = booksSlice.reducer

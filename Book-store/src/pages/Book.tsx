@@ -1,13 +1,16 @@
 import { useAppDispatch, useAppSelector } from '../types/hooks'
 import { useParams } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { toggleFavourite, fetchBook } from '../redux/book-slice'
+import { toggleFavouriteById } from '../redux/books-slice'
 import { Title } from '../components/title'
-import { fetchBook } from '../redux/book-slice'
 
 export function Book () {
   const { bookId } = useParams()
   const book = useAppSelector(state => state.book.data)
   const dispatch = useAppDispatch()
+
+  // const [isFavourite, setIsFavourite] = useState(false)
 
   useEffect(() => {
     dispatch(fetchBook(bookId))
@@ -19,6 +22,15 @@ export function Book () {
     )
   }
 
+  function handleClickAddToFavorites () {
+    console.log(book)
+
+    // dispatch(toggleFavouriteById(bookId))
+    dispatch(toggleFavourite())
+
+    // setIsFavourite(!isFavourite)
+  }
+
   return (
     <>
       <Title>{book.title}</Title>
@@ -26,6 +38,7 @@ export function Book () {
         <img src={book.image} alt="" />
       </div>
       <span className="post-description">{book.desc}</span>
+      <button style={{ margin: 32 }} onClick={handleClickAddToFavorites}>Like</button>
     </>
   )
 }

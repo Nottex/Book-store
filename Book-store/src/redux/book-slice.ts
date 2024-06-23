@@ -19,7 +19,27 @@ const bookSlice = createSlice({
   name: 'book',
   initialState,
   reducers: {
+    toggleFavourite: (state) => {
+      state.data.isFavourite = !state.data.isFavourite
 
+      const dataArrayFromStorage = localStorage.getItem('data')
+      const booksFromStorage = JSON.parse(dataArrayFromStorage)
+
+      if (booksFromStorage.length > 0) {
+        const asd = booksFromStorage.find(book => book.id === state.data.id)
+        if (asd) {
+          return
+        } else {
+          console.log('не нашло')
+
+          booksFromStorage.push(state.data)
+          localStorage.setItem('data', JSON.stringify(booksFromStorage))
+        }
+      } else {
+        booksFromStorage.push(state.data)
+        localStorage.setItem('data', JSON.stringify(booksFromStorage))
+      }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -28,7 +48,7 @@ const bookSlice = createSlice({
       })
       .addCase(fetchBook.fulfilled, (state, action) => {
         state.isLoading = false
-        state.data = action.payload
+        state.data = { ...action.payload, id: action.payload.isbn13, isFavourite: false }
       })
       .addCase(fetchBook.rejected, (state, action) => {
         state.isLoading = false
@@ -36,5 +56,7 @@ const bookSlice = createSlice({
       })
   }
 })
+
+export const { toggleFavourite } = bookSlice.actions
 
 export const bookReducer = bookSlice.reducer
