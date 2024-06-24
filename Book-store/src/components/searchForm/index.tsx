@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import './index.scss'
 import { IoIosSearch } from 'react-icons/io'
 
@@ -16,7 +16,7 @@ export function SearchForm () {
     if (search === '') {
       return alert('Заполните поле поиска')
     }
-    navigate(`/books/search/${search}`)
+    navigate(`/books/search/${search}/page/1`)
     setSearch('')
   }
 

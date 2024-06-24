@@ -24,7 +24,7 @@ export function Pagination (props) {
 
         return (
           <li className="page-item" key={index}>
-            <NavLink className="page-link" to={`/books/${props.route}${item}`}>
+            <NavLink className="page-link" to={`/books/search/${props.route}${item}`}>
               {item}
             </NavLink>
           </li>

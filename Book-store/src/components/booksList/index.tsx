@@ -21,12 +21,8 @@ export function BooksList () {
   const isLoading = useAppSelector(state => state.books.isLoading)
 
   useEffect(() => {
-    // console.log(books)
-
-    if (books.length > 0) return
-
     dispatch(fetchNewBooks())
-  }, [dispatch, books])
+  }, [dispatch])
 
   // function checkBooks () {
   //   if (booksFromLocalStorage?.length > 0) {

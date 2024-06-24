@@ -8,14 +8,14 @@ import { Pagination } from '../pagination'
 
 export function SearchList () {
   const dispatch = useAppDispatch()
-  const { query } = useParams()
+  const { query, page: currentPage } = useParams()
   const books = useAppSelector(state => state.books.list)
   const error = useAppSelector(state => state.books.error)
   const isLoading = useAppSelector(state => state.books.isLoading)
 
   useEffect(() => {
-    dispatch(fetchSearchBooks({ query, page: 1 }))
-  }, [query, dispatch])
+    dispatch(fetchSearchBooks({ query, page: currentPage || 1 }))
+  }, [query, dispatch, currentPage])
 
   function renderBooks () {
     if (isLoading) return <div>Loading...</div>
@@ -44,7 +44,7 @@ export function SearchList () {
       <div className="cards__wrapper">
         {renderBooks()}
       </div>
-      <Pagination />
+      <Pagination route={`${query}/page/`} />
     </>
   )
 }
