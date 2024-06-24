@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { fetchSearchBooks } from '../../redux/books-slice'
 import { BookCard } from '../bookCard'
 import { Title } from '../title'
+import { Pagination } from '../pagination'
 
 export function SearchList () {
   const dispatch = useAppDispatch()
@@ -13,7 +14,7 @@ export function SearchList () {
   const isLoading = useAppSelector(state => state.books.isLoading)
 
   useEffect(() => {
-    dispatch(fetchSearchBooks(query))
+    dispatch(fetchSearchBooks({ query, page: 1 }))
   }, [query, dispatch])
 
   function renderBooks () {
@@ -43,6 +44,7 @@ export function SearchList () {
       <div className="cards__wrapper">
         {renderBooks()}
       </div>
+      <Pagination />
     </>
   )
 }

@@ -5,14 +5,6 @@ import { IBooksState } from '../types/booksState'
 import { requestNewBooks, requestSearchBooks } from '../services/books'
 
 // Thunks
-// export const fetchNewBooks = createAsyncThunk('books/fetchNewBooks', async (params = {}, { rejectWithValue }) => {
-//   try {
-//     const offset = (params.page - 1) * initialState.total
-//     return await requestNewBooks({ total: initialState.total, offset, ...params })
-//   } catch (e) {
-//     return rejectWithValue(e.message)
-//   }
-// })
 
 export const fetchNewBooks = createAsyncThunk('books/fetchNewBooks', async (_, { rejectWithValue }) => {
   try {
@@ -22,9 +14,9 @@ export const fetchNewBooks = createAsyncThunk('books/fetchNewBooks', async (_, {
   }
 })
 
-export const fetchSearchBooks = createAsyncThunk('books/fetchSearchBooks', async (query, { rejectWithValue }) => {
+export const fetchSearchBooks = createAsyncThunk('books/fetchSearchBooks', async ({ query, page }, { rejectWithValue }) => {
   try {
-    return await requestSearchBooks(query)
+    return await requestSearchBooks(query, page)
   } catch (e) {
     return rejectWithValue(e.message)
   }
@@ -34,7 +26,7 @@ const initialState: IBooksState = {
   list: [],
   isLoading: false,
   error: null,
-  total: 20
+  pagesCount: null
 }
 
 export const booksSlice = createSlice({
@@ -75,6 +67,7 @@ export const booksSlice = createSlice({
         state.list = action.payload.books.map((book) => {
           return { ...book, id: book.isbn13, isFavourite: false }
         })
+        state.pagesCount = Math.ceil(action.payload.total / 10)
       })
       .addCase(fetchSearchBooks.rejected, (state, action) => {
         state.isLoading = false
