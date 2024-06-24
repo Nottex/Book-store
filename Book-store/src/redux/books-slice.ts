@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from './store'
 import { IBooksState } from '../types/booksState'
-import { requestNewBooks } from '../services/books'
+import { requestNewBooks, requestSearchBooks } from '../services/books'
 
 // Thunks
 // export const fetchNewBooks = createAsyncThunk('books/fetchNewBooks', async (params = {}, { rejectWithValue }) => {
@@ -17,6 +17,14 @@ import { requestNewBooks } from '../services/books'
 export const fetchNewBooks = createAsyncThunk('books/fetchNewBooks', async (_, { rejectWithValue }) => {
   try {
     return await requestNewBooks()
+  } catch (e) {
+    return rejectWithValue(e.message)
+  }
+})
+
+export const fetchSearchBooks = createAsyncThunk('books/fetchSearchBooks', async (query, { rejectWithValue }) => {
+  try {
+    return await requestSearchBooks(query)
   } catch (e) {
     return rejectWithValue(e.message)
   }
@@ -56,6 +64,19 @@ export const booksSlice = createSlice({
         })
       })
       .addCase(fetchNewBooks.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.error.message
+      })
+      .addCase(fetchSearchBooks.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(fetchSearchBooks.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.list = action.payload.books.map((book) => {
+          return { ...book, id: book.isbn13, isFavourite: false }
+        })
+      })
+      .addCase(fetchSearchBooks.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.error.message
       })

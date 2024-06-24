@@ -22,22 +22,24 @@ const bookSlice = createSlice({
     toggleFavourite: (state) => {
       state.data.isFavourite = !state.data.isFavourite
 
-      const dataArrayFromStorage = localStorage.getItem('data')
-      const booksFromStorage = JSON.parse(dataArrayFromStorage)
+      const getFavouritesFromStorage = localStorage.getItem('favourites')
+      const favouritesBooks = JSON.parse(getFavouritesFromStorage)
 
-      if (booksFromStorage.length > 0) {
-        const asd = booksFromStorage.find(book => book.id === state.data.id)
-        if (asd) {
-          return
+      if (favouritesBooks.length > 0) {
+        const bookExistInLocalStorage = favouritesBooks.find(book => book.id === state.data.id)
+        if (bookExistInLocalStorage) {
+          const bookId = favouritesBooks.findIndex(book => book.id === state.data.id)
+
+          favouritesBooks.splice(bookId, 1)
+
+          localStorage.setItem('favourites', JSON.stringify(favouritesBooks))
         } else {
-          console.log('не нашло')
-
-          booksFromStorage.push(state.data)
-          localStorage.setItem('data', JSON.stringify(booksFromStorage))
+          favouritesBooks.push(state.data)
+          localStorage.setItem('favourites', JSON.stringify(favouritesBooks))
         }
       } else {
-        booksFromStorage.push(state.data)
-        localStorage.setItem('data', JSON.stringify(booksFromStorage))
+        favouritesBooks.push(state.data)
+        localStorage.setItem('favourites', JSON.stringify(favouritesBooks))
       }
     }
   },
@@ -49,6 +51,21 @@ const bookSlice = createSlice({
       .addCase(fetchBook.fulfilled, (state, action) => {
         state.isLoading = false
         state.data = { ...action.payload, id: action.payload.isbn13, isFavourite: false }
+
+        const getFavouritesFromStorage = localStorage.getItem('favourites')
+        const favouritesBooks = JSON.parse(getFavouritesFromStorage)
+
+        if (favouritesBooks.length > 0) {
+          console.log(state.data.id)
+
+          const bookExistInLocalStorage = favouritesBooks.find(book => book.id === state.data.id)
+          if (bookExistInLocalStorage) {
+            state.data.isFavourite = true
+            console.log(state.data.isFavourite)
+          } else {
+            return
+          }
+        }
       })
       .addCase(fetchBook.rejected, (state, action) => {
         state.isLoading = false

@@ -1,14 +1,16 @@
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../types/hooks'
 import { BookCard } from '../bookCard'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 export function FavouriteList () {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   // const books = useAppSelector(state => state.books.list)
   const getBooksFromLocalStorage = () => {
-    const data = localStorage.getItem('data')
+    const favouritesBooks = localStorage.getItem('favourites')
 
-    return JSON.parse(data)
+    return JSON.parse(favouritesBooks)
   }
   const error = useAppSelector(state => state.books.error)
   const isLoading = useAppSelector(state => state.books.isLoading)
@@ -29,6 +31,13 @@ export function FavouriteList () {
 
   return (
     <>
+      <NavLink to={'..'}
+        onClick={(e) => {
+          e.preventDefault()
+          navigate(-1)
+        }}
+      >
+        Go back (-1)</NavLink>
       <div className="cards__wrapper">
         {renderBooks()}
       </div>

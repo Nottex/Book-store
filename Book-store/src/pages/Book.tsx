@@ -23,9 +23,6 @@ export function Book () {
   }
 
   function handleClickAddToFavorites () {
-    console.log(book)
-
-    // dispatch(toggleFavouriteById(bookId))
     dispatch(toggleFavourite())
 
     // setIsFavourite(!isFavourite)

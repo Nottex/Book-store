@@ -3,10 +3,10 @@ import { booksReducer } from './books-slice'
 import { bookReducer } from './book-slice'
 
 const isArrayInLocalStorageExist = (store) => (next) => (action) => {
-  if (localStorage.data) {
+  if (localStorage.favourites) {
     next(action)
   } else {
-    localStorage.setItem('data', JSON.stringify([]))
+    localStorage.setItem('favourites', JSON.stringify([]))
     return next(action)
   }
 }

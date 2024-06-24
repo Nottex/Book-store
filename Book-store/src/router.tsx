@@ -3,6 +3,7 @@ import { Layout } from './components/layout'
 import { Main } from './pages/Main'
 import { Book } from './pages/Book'
 import { Favourites } from './pages/Favourites'
+import { SearchResults } from './pages/SearchResults'
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
       {
         path: '/favourites',
         element: <Favourites />
+      },
+      {
+        path: '/books/search/:query',
+        element: <SearchResults />
       }
     ]
   }

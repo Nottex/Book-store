@@ -4,8 +4,11 @@ const newBooksEndpoint = '/new'
 
 const singleBookEndpoint = '/books/'
 
+const searchEndpoint = '/search/'
+
 export {
   baseEndpoint,
   newBooksEndpoint,
-  singleBookEndpoint
+  singleBookEndpoint,
+  searchEndpoint
 }
