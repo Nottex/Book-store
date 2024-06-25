@@ -42,7 +42,7 @@ const bookSlice = createSlice({
         localStorage.setItem('favourites', JSON.stringify(favouritesBooks))
       }
     },
-    addToCart: (state) => {
+    addBookToCart: (state) => {
       const getCartFromStorage = localStorage.getItem('cart')
       const cart = JSON.parse(getCartFromStorage)
 
@@ -60,6 +60,17 @@ const bookSlice = createSlice({
         cart.push(state.data)
         localStorage.setItem('cart', JSON.stringify(cart))
       }
+    },
+    removeBookFromCart: (state, action) => {
+      const bookId = action.payload
+      const getCartFromStorage = localStorage.getItem('cart')
+      const cart = JSON.parse(getCartFromStorage)
+
+      const bookIndex = cart.findIndex(book => bookId === book.id)
+
+      state.data.inCart = false
+      cart.splice(bookIndex, 1)
+      localStorage.setItem('cart', JSON.stringify(cart))
     }
   },
   extraReducers: (builder) => {
@@ -103,6 +114,6 @@ const bookSlice = createSlice({
   }
 })
 
-export const { toggleFavourite, addToCart } = bookSlice.actions
+export const { toggleFavourite, addBookToCart, removeBookFromCart } = bookSlice.actions
 
 export const bookReducer = bookSlice.reducer

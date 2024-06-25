@@ -1,0 +1,64 @@
+.book-card-sm {
+  margin-top: 20px;
+  display: flex;
+}
+
+.book-card-sm__image {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+  position: relative;
+}
+
+.book-card-sm__image img {
+  width: 50%;
+  // margin: 50px 0;
+}
+
+.book-icon-sm {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 15px;
+}
+
+.book-card-sm__info {
+  width: 60%;
+  padding: 10px;
+}
+
+.book-card-sm__title {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.book-card-sm__about {
+  color: gray;
+  font-size: 18px;
+}
+
+.book-card-sm__counter {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+}
+
+.book-card-sm__counter span {
+  font-size: 18px;
+}
+
+.book-card-sm__features {
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.book-card-sm__features__close {
+  cursor: pointer;
+}

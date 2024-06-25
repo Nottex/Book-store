@@ -49,8 +49,9 @@ export const booksSlice = createSlice({
       .addCase(fetchNewBooks.fulfilled, (state, action) => {
         state.isLoading = false
         state.list = action.payload.books.map((book) => {
-          return { ...book, id: book.isbn13, isFavourite: false }
+          return { ...book, id: book.isbn13, isFavourite: false, inCart: false }
         })
+        console.log(state.list)
       })
       .addCase(fetchNewBooks.rejected, (state, action) => {
         state.isLoading = false
@@ -62,7 +63,7 @@ export const booksSlice = createSlice({
       .addCase(fetchSearchBooks.fulfilled, (state, action) => {
         state.isLoading = false
         state.list = action.payload.books.map((book) => {
-          return { ...book, id: book.isbn13, isFavourite: false }
+          return { ...book, id: book.isbn13, isFavourite: false, inCart: false }
         })
         state.pagesCount = Math.ceil(action.payload.total / 10)
       })

@@ -10,6 +10,7 @@ const cartSlice = createSlice({
   reducers: {
     setCartValue: (state, action) => {
       state.list = action.payload
+      // localStorage.setItem('cart', JSON.stringify(state.list))
     }
   }
 })

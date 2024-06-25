@@ -1,20 +1,14 @@
 import { useAppDispatch, useAppSelector } from '../types/hooks'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { toggleFavourite, addToCart, fetchBook } from '../redux/book-slice'
+import { toggleFavourite, addBookToCart, fetchBook, removeBookFromCart } from '../redux/book-slice'
 import { toggleFavouriteById } from '../redux/books-slice'
 import { Title } from '../components/title'
-import { setCartValue } from '../redux/cart-slice'
 
 export function Book () {
   const { bookId } = useParams()
   const book = useAppSelector(state => state.book.data)
   const dispatch = useAppDispatch()
-
-  const cartList = useAppSelector(state => state.cart.list)
-
-  const getCartFromStorage = localStorage.getItem('cart')
-  const cart = JSON.parse(getCartFromStorage)
 
   // const [isFavourite, setIsFavourite] = useState(false)
 
@@ -36,8 +30,7 @@ export function Book () {
   }
 
   function handleClickAddToCart () {
-    dispatch(addToCart())
-    dispatch(setCartValue(cart))
+    dispatch(addBookToCart())
   }
 
   return (

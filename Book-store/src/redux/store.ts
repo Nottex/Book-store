@@ -4,15 +4,11 @@ import { bookReducer } from './book-slice'
 import { cartReducer } from './cart-slice'
 
 const createFavouritesAndCartInLocalStorage = (store) => (next) => (action) => {
-  if (localStorage.favourites) {
-    next(action)
-  } else {
+  if (!localStorage.favourites) {
     localStorage.setItem('favourites', JSON.stringify([]))
   }
 
-  if (localStorage.cart) {
-    next(action)
-  } else {
+  if (!localStorage.cart) {
     localStorage.setItem('cart', JSON.stringify([]))
   }
 
