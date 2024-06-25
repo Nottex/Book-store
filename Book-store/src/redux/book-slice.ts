@@ -26,8 +26,8 @@ const bookSlice = createSlice({
       const favouritesBooks = JSON.parse(getFavouritesFromStorage)
 
       if (favouritesBooks.length > 0) {
-        const bookExistInLocalStorage = favouritesBooks.find(book => book.id === state.data.id)
-        if (bookExistInLocalStorage) {
+        const bookInFavourites = favouritesBooks.find(book => book.id === state.data.id)
+        if (bookInFavourites) {
           const bookId = favouritesBooks.findIndex(book => book.id === state.data.id)
 
           favouritesBooks.splice(bookId, 1)
@@ -41,6 +41,25 @@ const bookSlice = createSlice({
         favouritesBooks.push(state.data)
         localStorage.setItem('favourites', JSON.stringify(favouritesBooks))
       }
+    },
+    addToCart: (state) => {
+      const getCartFromStorage = localStorage.getItem('cart')
+      const cart = JSON.parse(getCartFromStorage)
+
+      if (cart.length > 0) {
+        const bookInCart = cart.find(book => book.id === state.data.id)
+        if (bookInCart) {
+          state.data.inCart = true
+        } else {
+          state.data.inCart = true
+          cart.push(state.data)
+          localStorage.setItem('cart', JSON.stringify(cart))
+        }
+      } else {
+        state.data.inCart = true
+        cart.push(state.data)
+        localStorage.setItem('cart', JSON.stringify(cart))
+      }
     }
   },
   extraReducers: (builder) => {
@@ -50,20 +69,30 @@ const bookSlice = createSlice({
       })
       .addCase(fetchBook.fulfilled, (state, action) => {
         state.isLoading = false
-        state.data = { ...action.payload, id: action.payload.isbn13, isFavourite: false }
+        state.data = { ...action.payload, id: action.payload.isbn13, isFavourite: false, inCart: false }
 
         const getFavouritesFromStorage = localStorage.getItem('favourites')
         const favouritesBooks = JSON.parse(getFavouritesFromStorage)
 
         if (favouritesBooks.length > 0) {
-          console.log(state.data.id)
+          const bookInFavourites = favouritesBooks.find(book => book.id === state.data.id)
 
-          const bookExistInLocalStorage = favouritesBooks.find(book => book.id === state.data.id)
-          if (bookExistInLocalStorage) {
+          if (bookInFavourites) {
             state.data.isFavourite = true
-            console.log(state.data.isFavourite)
+          }
+        }
+
+        const getCartFromStorage = localStorage.getItem('cart')
+        const cart = JSON.parse(getCartFromStorage)
+
+        if (cart.length > 0) {
+          const bookInCart = cart.find(book => book.id === state.data.id)
+
+          if (bookInCart) {
+            state.data.inCart = true
+            console.log(state.data.inCart)
           } else {
-            return
+            console.log('нет в корзине')
           }
         }
       })
@@ -74,6 +103,6 @@ const bookSlice = createSlice({
   }
 })
 
-export const { toggleFavourite } = bookSlice.actions
+export const { toggleFavourite, addToCart } = bookSlice.actions
 
 export const bookReducer = bookSlice.reducer

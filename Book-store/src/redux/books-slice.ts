@@ -36,12 +36,9 @@ export const booksSlice = createSlice({
     toggleFavouriteById: (state, action) => {
       const id = action.payload
 
-      const index = state.list.findIndex((book) => book.id === id)
+      const book = state.list.find((book) => book.id === id)
 
-      state.list[index].isFavourite = !state.list[index].isFavourite
-
-      // if(localStorage)
-      // localStorage.setItem('data', JSON.stringify(state.list))
+      // book.isFavourite = !book.isFavourite
     }
   },
   extraReducers: (builder) => {

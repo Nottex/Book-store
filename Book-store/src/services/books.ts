@@ -13,12 +13,6 @@ async function requestBook(id) {
   return data
 }
 
-// async function requestSearchBooks(query) {
-//   const { data } = await client.get(`${searchEndpoint}${query}`)
-
-//   return data
-// }
-
 async function requestSearchBooks(query, page) {
   const { data } = await client.get(`${searchEndpoint}${query}/${page}`)
 
