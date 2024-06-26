@@ -3,8 +3,8 @@ import { FaRegHeart } from 'react-icons/fa'
 import { MdOutlineShoppingCart } from 'react-icons/md'
 import './index.scss'
 import { useAppDispatch } from '../../types/hooks'
-import { addBookToCart } from '../../redux/book-slice'
-import { toggleFavouriteById } from '../../redux/books-slice'
+// import { addBookToCart } from '../../redux/book-slice'
+import { toggleFavouriteById, addBookToCart } from '../../redux/books-slice'
 
 interface Props {
   id: string,

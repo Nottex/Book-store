@@ -5,6 +5,8 @@ import { IBooksState } from '../types/booksState'
 import { requestNewBooks, requestSearchBooks } from '../services/books'
 import { getFavouritesFromLocalStorage } from '../utils/getFavouritesFromLocalStorage'
 import { setFavouritesToLocalSorage } from '../utils/setFavouritesToLocalStorage'
+import { getCartFromLocalStorage } from '../utils/getCartFromLocalStorage'
+import { setCartToLocalSorage } from '../utils/setCartToLocalStorage'
 
 // Thunks
 
@@ -59,31 +61,35 @@ export const booksSlice = createSlice({
 
       state.favourites = getFavouritesFromLocalStorage()
     },
-    addBookToCart: (state) => {
-      const getCartFromStorage = localStorage.getItem('cart')
-      const cart = JSON.parse(getCartFromStorage)
-      console.log(state.data)
+    addBookToCart: (state, action) => {
+      const bookId = action.payload
 
-      if (cart.length > 0) {
-        const bookInCart = cart.find(book => book.id === state.data.id)
+      const bookIndex = state.list.findIndex(book => book.id === bookId)
+
+      const bookItem = state.list[bookIndex]
+
+      if (state.cart.length > 0) {
+        const bookInCart = state.cart.find(book => book.id === bookId)
+        // const a = () => state.cart.find(book => book.id === bookId)
+        // console.log(a)
+
         if (bookInCart) {
-          state.data.inCart = true
+          bookItem.inCart = true
         } else {
-          state.data.inCart = true
-          cart.push(state.data)
-          localStorage.setItem('cart', JSON.stringify(cart))
+          bookItem.inCart = true
+          state.cart.push(bookItem)
         }
       } else {
-        state.data.inCart = true
-        cart.push(state.data)
-        localStorage.setItem('cart', JSON.stringify(cart))
+        bookItem.inCart = true
+        state.cart.push(bookItem)
       }
+      setCartToLocalSorage(state.cart)
+      state.cart = getCartFromLocalStorage()
     },
     removeBookFromCart: (state, action) => {
       const bookId = action.payload
 
-      const getCartFromStorage = localStorage.getItem('cart')
-      const cart = JSON.parse(getCartFromStorage)
+      const cart = getCartFromLocalStorage()
 
       const book = cart.find(book => bookId === book.id)
       book.inCart = false
@@ -110,6 +116,7 @@ export const booksSlice = createSlice({
         })
 
         state.favourites = getFavouritesFromLocalStorage()
+        state.cart = getCartFromLocalStorage()
       })
       .addCase(fetchNewBooks.rejected, (state, action) => {
         state.isLoading = false
@@ -123,8 +130,10 @@ export const booksSlice = createSlice({
         state.list = action.payload.books.map((book) => {
           return { ...book, id: book.isbn13, isFavourite: false, inCart: false }
         })
-        state.favourites = getFavouritesFromLocalStorage()
         state.pagesCount = Math.ceil(action.payload.total / 10)
+
+        state.favourites = getFavouritesFromLocalStorage()
+        state.cart = getCartFromLocalStorage()
       })
       .addCase(fetchSearchBooks.rejected, (state, action) => {
         state.isLoading = false

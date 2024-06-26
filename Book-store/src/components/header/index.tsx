@@ -17,10 +17,6 @@ export function Header () {
   const cart = getCartFromLocalStorage()
   const favourites = getFavouritesFromLocalStorage()
 
-  function displayFavouritesCircle () {
-
-  }
-
   useEffect(() => {
 
   }, [books, bookState])
@@ -40,7 +36,6 @@ export function Header () {
         <div className="features__cart">
           <NavLink className="features-icon" to="/cart"><MdOutlineShoppingCart /></NavLink>
           <span className="features-icon__counter">{cart ? cart.length : 0}</span>
-          {/* <span className="features-icon__counter">{displayCartCounter()}</span> */}
         </div>
       </div>
     </header>

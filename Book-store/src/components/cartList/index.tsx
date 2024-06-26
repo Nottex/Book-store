@@ -13,9 +13,6 @@ export function CartList () {
 
   const bookState = useAppSelector(state => state.book)
 
-  // Пока не работает зависимость от books
-  // const books = useAppSelector(state => state.books.list)
-
   const [totalPriceCounter, setTotalPriceCounter] = useState(0)
 
   const error = useAppSelector(state => state.books.error)
@@ -23,22 +20,17 @@ export function CartList () {
 
   const booksFromCart = getCartFromLocalStorage()
 
-  // useEffect(() => {
-  //   if (books.length > 0) return
-
-  //   dispatch(fetchNewBooks())
-  //   totalPriceValue()
-  // }, [books, dispatch])
-
   useEffect(() => {
     totalPriceValue()
-  }, [bookState])
+  }, [booksFromCart])
 
   function totalPriceValue () {
     let totalPrice = 0
-    booksFromCart.forEach(book => {
-      totalPrice += Number(book.price.slice(1))
-    })
+    if (booksFromCart && booksFromCart.length > 0) {
+      booksFromCart.forEach(book => {
+        totalPrice += Number(book.price.slice(1))
+      })
+    }
     setTotalPriceCounter(totalPrice)
   }
 
