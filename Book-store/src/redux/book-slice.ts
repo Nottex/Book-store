@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { requestBook } from '../services/books'
+import { getCartFromLocalStorage } from '../utils/getCartFromLocalStorage'
 
 export const fetchBook = createAsyncThunk('book/fetchBook', async (id, { rejectWithValue }) => {
   try {
@@ -12,6 +13,7 @@ export const fetchBook = createAsyncThunk('book/fetchBook', async (id, { rejectW
 const initialState = {
   data: {},
   isLoading: false,
+  cart: null,
   error: null
 }
 
@@ -45,6 +47,7 @@ const bookSlice = createSlice({
     addBookToCart: (state) => {
       const getCartFromStorage = localStorage.getItem('cart')
       const cart = JSON.parse(getCartFromStorage)
+      console.log(state.data)
 
       if (cart.length > 0) {
         const bookInCart = cart.find(book => book.id === state.data.id)
@@ -63,14 +66,22 @@ const bookSlice = createSlice({
     },
     removeBookFromCart: (state, action) => {
       const bookId = action.payload
+
       const getCartFromStorage = localStorage.getItem('cart')
       const cart = JSON.parse(getCartFromStorage)
 
+      const book = cart.find(book => bookId === book.id)
       const bookIndex = cart.findIndex(book => bookId === book.id)
 
       state.data.inCart = false
       cart.splice(bookIndex, 1)
       localStorage.setItem('cart', JSON.stringify(cart))
+
+      setTimeout(() => {
+        console.log(book.inCart)
+      }, 1000)
+
+      state.cart = getCartFromLocalStorage()
     }
   },
   extraReducers: (builder) => {

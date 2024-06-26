@@ -9,7 +9,8 @@ import { useAppDispatch, useAppSelector } from '../../types/hooks'
 import { addToCart } from '../../redux/book-slice'
 
 export function Header () {
-  const bookState = useAppSelector(state => state.book.data)
+  const books = useAppSelector(state => state.books.list)
+  const bookState = useAppSelector(state => state.book)
 
   const getCartFromStorage = localStorage.getItem('cart')
   const cart = JSON.parse(getCartFromStorage)
@@ -18,9 +19,17 @@ export function Header () {
 
   }
 
+  function displayCartCounter () {
+    if (cart && cart.length > 0) {
+      return cart.length
+    } else {
+      return 0
+    }
+  }
+
   useEffect(() => {
 
-  }, [bookState])
+  }, [books, bookState])
 
   return (
     <header className="navbar">
@@ -36,6 +45,7 @@ export function Header () {
         <div className="features__cart">
           <NavLink className="features-icon" to="/cart"><MdOutlineShoppingCart /></NavLink>
           <span className="features-icon__counter">{cart ? cart.length : 0}</span>
+          {/* <span className="features-icon__counter">{displayCartCounter()}</span> */}
         </div>
       </div>
     </header>

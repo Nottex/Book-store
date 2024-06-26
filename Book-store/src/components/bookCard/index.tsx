@@ -4,6 +4,7 @@ import { MdOutlineShoppingCart } from 'react-icons/md'
 import './index.scss'
 import { useAppDispatch } from '../../types/hooks'
 import { addBookToCart } from '../../redux/book-slice'
+import { toggleFavouriteById } from '../../redux/books-slice'
 
 interface Props {
   id: string,
@@ -16,15 +17,29 @@ interface Props {
 export function BookCard (props: Props) {
   const dispatch = useAppDispatch()
 
+  function handleClickToogleFavourite () {
+    dispatch(toggleFavouriteById(props.id))
+  }
+
+  // Не работает, т.к. обработчик на одну книгу, а не на массив
   function handleClickAddToCart () {
     dispatch(addBookToCart(props.id))
+  }
+
+  function displayFavourite () {
+    if (props.isFavorite) {
+      return null
+    } else {
+      <FaRegHeart className="book-icon" onClick={handleClickToogleFavourite}/>
+    }
   }
 
   return (
     <div className="book-card">
       <div className="book-card__image">
         <div className="book-card__icons">
-          <FaRegHeart className="book-icon" />
+          {/* {displayFavourite()} */}
+          <FaRegHeart className="book-icon" onClick={handleClickToogleFavourite}/>
           <MdOutlineShoppingCart className="book-icon" onClick={handleClickAddToCart}/>
         </div>
         <img src={props.image} alt="" />
