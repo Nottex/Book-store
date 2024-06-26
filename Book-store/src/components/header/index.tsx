@@ -7,24 +7,18 @@ import { SearchForm } from '../searchForm'
 import { setCartValue } from '../../redux/cart-slice'
 import { useAppDispatch, useAppSelector } from '../../types/hooks'
 import { addToCart } from '../../redux/book-slice'
+import { getCartFromLocalStorage } from '../../utils/getCartFromLocalStorage'
+import { getFavouritesFromLocalStorage } from '../../utils/getFavouritesFromLocalStorage'
 
 export function Header () {
   const books = useAppSelector(state => state.books.list)
   const bookState = useAppSelector(state => state.book)
 
-  const getCartFromStorage = localStorage.getItem('cart')
-  const cart = JSON.parse(getCartFromStorage)
+  const cart = getCartFromLocalStorage()
+  const favourites = getFavouritesFromLocalStorage()
 
   function displayFavouritesCircle () {
 
-  }
-
-  function displayCartCounter () {
-    if (cart && cart.length > 0) {
-      return cart.length
-    } else {
-      return 0
-    }
   }
 
   useEffect(() => {
@@ -40,6 +34,7 @@ export function Header () {
       <div className="navbar__features">
         <div className="features__favourites">
           <NavLink className="features-icon" to="/favourites"><FaRegHeart /></NavLink>
+          <span className="features-icon__counter">{favourites ? favourites.length : 0}</span>
           <div className="feature-icon__circle"></div>
         </div>
         <div className="features__cart">

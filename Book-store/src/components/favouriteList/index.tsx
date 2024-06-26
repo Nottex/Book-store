@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../types/hooks'
 import { fetchNewBooks } from '../../redux/books-slice'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { BookCardSmall } from '../bookCardSmall'
+import { getFavouritesFromLocalStorage } from '../../utils/getFavouritesFromLocalStorage'
 
 export function FavouriteList () {
   const dispatch = useAppDispatch()
@@ -16,13 +17,14 @@ export function FavouriteList () {
   const error = useAppSelector(state => state.books.error)
   const isLoading = useAppSelector(state => state.books.isLoading)
 
-  const favouriteBooks = getBooksFromLocalStorage()
+  const favouriteBooks = getFavouritesFromLocalStorage()
+  // const favouriteBooks = getBooksFromLocalStorage()
 
   useEffect(() => {
-    if (books.length > 0) return
+    // if (books.length > 0) return
 
-    dispatch(fetchNewBooks())
-  }, [dispatch, books])
+    // dispatch(fetchNewBooks())
+  }, [dispatch, favouriteBooks])
 
   function renderBooks () {
     if (isLoading) return <div>Loading...</div>

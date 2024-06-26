@@ -6,8 +6,9 @@ import { fetchNewBooks } from '../../redux/books-slice'
 
 export function BooksList () {
   const dispatch = useAppDispatch()
-  // const booksFromStore = useAppSelector(state => state.books.list)
+
   const books = useAppSelector(state => state.books.list)
+  // const favourites = useAppSelector(state => state.books.favourites)
   // const getBooksFromLocalStorage = () => {
   //   const data = localStorage.getItem('data')
 

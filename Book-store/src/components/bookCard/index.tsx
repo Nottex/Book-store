@@ -27,7 +27,7 @@ export function BookCard (props: Props) {
   }
 
   function displayFavourite () {
-    if (props.isFavorite) {
+    if (props.isFavorite === true) {
       return null
     } else {
       <FaRegHeart className="book-icon" onClick={handleClickToogleFavourite}/>

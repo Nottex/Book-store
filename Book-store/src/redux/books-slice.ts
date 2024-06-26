@@ -4,6 +4,7 @@ import type { RootState } from './store'
 import { IBooksState } from '../types/booksState'
 import { requestNewBooks, requestSearchBooks } from '../services/books'
 import { getFavouritesFromLocalStorage } from '../utils/getFavouritesFromLocalStorage'
+import { setFavouritesToLocalSorage } from '../utils/setFavouritesToLocalStorage'
 
 // Thunks
 
@@ -25,7 +26,8 @@ export const fetchSearchBooks = createAsyncThunk('books/fetchSearchBooks', async
 
 const initialState: IBooksState = {
   list: [],
-  favourites: null,
+  favourites: [],
+  cart: [],
   isLoading: false,
   error: null,
   pagesCount: null
@@ -38,33 +40,22 @@ export const booksSlice = createSlice({
     toggleFavouriteById: (state, action) => {
       const bookId = action.payload
 
-      const book = state.list.find((book) => book.id === bookId)
       const bookIndex = state.list.findIndex(book => book.id === bookId)
 
+      const book = state.list[bookIndex]
+
       state.list[bookIndex].isFavourite = !state.list[bookIndex].isFavourite
-      book.isFavourite = !book.isFavourite
 
-      const getFavouritesFromStorage = localStorage.getItem('favourites')
-      const favouritesBooks = JSON.parse(getFavouritesFromStorage)
+      const indexBookFromFavourites = state.favourites.findIndex((element) => element.id === book.id)
+      const isBookInFavourites = state.favourites.find((element) => element.id === book.id)
 
-      if (favouritesBooks.length > 0) {
-        const bookInFavourites = favouritesBooks.find(book => book.id === bookId)
-        if (bookInFavourites) {
-          const bookIndex = favouritesBooks.findIndex(book => book.id === bookId)
-
-          favouritesBooks.splice(bookIndex, 1)
-
-          localStorage.setItem('favourites', JSON.stringify(favouritesBooks))
-        } else {
-          favouritesBooks.push(state.list[bookIndex])
-          localStorage.setItem('favourites', JSON.stringify(favouritesBooks))
-        }
+      if (isBookInFavourites) {
+        state.favourites.splice(indexBookFromFavourites, 1)
       } else {
-        console.log(state.list[bookIndex])
-
-        favouritesBooks.push(state.list[bookIndex])
-        localStorage.setItem('favourites', JSON.stringify(favouritesBooks))
+        state.favourites.push(book)
       }
+
+      setFavouritesToLocalSorage(state.favourites)
 
       state.favourites = getFavouritesFromLocalStorage()
     },
@@ -114,18 +105,11 @@ export const booksSlice = createSlice({
       .addCase(fetchNewBooks.fulfilled, (state, action) => {
         state.isLoading = false
 
-        if (state.list.length > 0) {
-          state.list = state.list.books.map(book => book)
-        } else {
-          state.list = action.payload.books.map((book) => {
-            return { ...book, id: book.isbn13, isFavourite: false, inCart: false }
-          })
-        }
-        // state.list = action.payload.books.map((book) => {
-        //   return { ...book, id: book.isbn13, isFavourite: false, inCart: false }
-        // })
+        state.list = action.payload.books.map((book) => {
+          return { ...book, id: book.isbn13, isFavourite: false, inCart: false }
+        })
 
-        console.log(state.list)
+        state.favourites = getFavouritesFromLocalStorage()
       })
       .addCase(fetchNewBooks.rejected, (state, action) => {
         state.isLoading = false
@@ -139,6 +123,7 @@ export const booksSlice = createSlice({
         state.list = action.payload.books.map((book) => {
           return { ...book, id: book.isbn13, isFavourite: false, inCart: false }
         })
+        state.favourites = getFavouritesFromLocalStorage()
         state.pagesCount = Math.ceil(action.payload.total / 10)
       })
       .addCase(fetchSearchBooks.rejected, (state, action) => {

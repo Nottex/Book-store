@@ -5,6 +5,7 @@ import { BookCardSmall } from '../bookCardSmall'
 import { BookCard } from '../bookCard'
 import { useEffect, useState } from 'react'
 import { fetchNewBooks } from '../../redux/books-slice'
+import { getCartFromLocalStorage } from '../../utils/getCartFromLocalStorage'
 
 export function CartList () {
   const navigate = useNavigate()
@@ -17,26 +18,20 @@ export function CartList () {
 
   const [totalPriceCounter, setTotalPriceCounter] = useState(0)
 
-  const getCartFromStorage = () => {
-    const cart = localStorage.getItem('cart')
-
-    return JSON.parse(cart)
-  }
-
   const error = useAppSelector(state => state.books.error)
   const isLoading = useAppSelector(state => state.books.isLoading)
 
-  const booksFromCart = getCartFromStorage()
+  const booksFromCart = getCartFromLocalStorage()
 
   // useEffect(() => {
   //   if (books.length > 0) return
-  //   console.log(books)
 
   //   dispatch(fetchNewBooks())
   //   totalPriceValue()
   // }, [books, dispatch])
 
   useEffect(() => {
+    totalPriceValue()
   }, [bookState])
 
   function totalPriceValue () {
@@ -57,16 +52,6 @@ export function CartList () {
     } else {
       return <div>0 Books in cart</div>
     }
-
-    // if (booksFromCart) {
-    //   return booksFromCart.map((book) => {
-    //     if (book.inCart === true) {
-    //       return <BookCard key={book.isbn13} id={book.isbn13} title={book.title} info={book.subtitle} image={book.image} price={book.price} />
-    //     }
-    //   })
-    // } else {
-    //   return <div>0 Books in cart</div>
-    // }
   }
 
   return (
