@@ -62,6 +62,7 @@ export const booksSlice = createSlice({
       state.favourites = getFavouritesFromLocalStorage()
     },
     addBookToCart: (state, action) => {
+      state.cart = getCartFromLocalStorage()
       const bookId = action.payload
 
       const bookIndex = state.list.findIndex(book => book.id === bookId)
@@ -70,8 +71,6 @@ export const booksSlice = createSlice({
 
       if (state.cart.length > 0) {
         const bookInCart = state.cart.find(book => book.id === bookId)
-        // const a = () => state.cart.find(book => book.id === bookId)
-        // console.log(a)
 
         if (bookInCart) {
           bookItem.inCart = true
@@ -85,22 +84,6 @@ export const booksSlice = createSlice({
       }
       setCartToLocalSorage(state.cart)
       state.cart = getCartFromLocalStorage()
-    },
-    removeBookFromCart: (state, action) => {
-      const bookId = action.payload
-
-      const cart = getCartFromLocalStorage()
-
-      const book = cart.find(book => bookId === book.id)
-      book.inCart = false
-      const bookIndex = cart.findIndex(book => bookId === book.id)
-
-      cart.splice(bookIndex, 1)
-      localStorage.setItem('cart', JSON.stringify(cart))
-      state.list[bookIndex].inCart = false
-      setTimeout(() => {
-        console.log(state.list)
-      }, 1000)
     }
   },
   extraReducers: (builder) => {
@@ -142,6 +125,6 @@ export const booksSlice = createSlice({
   }
 })
 
-export const { toggleFavouriteById, removeBookFromCart, addBookToCart } = booksSlice.actions
+export const { toggleFavouriteById, addBookToCart } = booksSlice.actions
 
 export const booksReducer = booksSlice.reducer

@@ -29,6 +29,7 @@ export function SearchList () {
         title={book.title}
         price={book.price}
         image={book.image}
+        info={book.subtitle}
       />)
   }
 
@@ -41,7 +42,7 @@ export function SearchList () {
   return (
     <>
       <Title>Search results for «{query}»</Title>
-      <div className="cards__wrapper">
+      <div className="book-cards__wrapper">
         {renderBooks()}
       </div>
       <Pagination route={`${query}/page/`} />

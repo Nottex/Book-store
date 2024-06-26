@@ -1,8 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAppSelector, useAppDispatch } from '../../types/hooks'
-import { removeBookFromCart } from '../../redux/book-slice'
 import { BookCardSmall } from '../bookCardSmall'
-import { BookCard } from '../bookCard'
 import { useEffect, useState } from 'react'
 import { fetchNewBooks } from '../../redux/books-slice'
 import { getCartFromLocalStorage } from '../../utils/getCartFromLocalStorage'
@@ -13,6 +11,8 @@ export function CartList () {
 
   const bookState = useAppSelector(state => state.book)
 
+  const books = useAppSelector(state => state.books.list)
+
   const [totalPriceCounter, setTotalPriceCounter] = useState(0)
 
   const error = useAppSelector(state => state.books.error)
@@ -22,7 +22,11 @@ export function CartList () {
 
   useEffect(() => {
     totalPriceValue()
-  }, [booksFromCart])
+
+    if (books.length > 0) return
+
+    dispatch(fetchNewBooks())
+  }, [bookState])
 
   function totalPriceValue () {
     let totalPrice = 0

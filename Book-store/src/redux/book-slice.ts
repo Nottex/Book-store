@@ -13,7 +13,7 @@ export const fetchBook = createAsyncThunk('book/fetchBook', async (id, { rejectW
 const initialState = {
   data: {},
   isLoading: false,
-  cart: null,
+  cart: [],
   error: null
 }
 
@@ -76,10 +76,6 @@ const bookSlice = createSlice({
       state.data.inCart = false
       cart.splice(bookIndex, 1)
       localStorage.setItem('cart', JSON.stringify(cart))
-
-      setTimeout(() => {
-        console.log(book.inCart)
-      }, 1000)
 
       state.cart = getCartFromLocalStorage()
     }

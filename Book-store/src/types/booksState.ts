@@ -1,3 +1,8 @@
 export interface IBooksState {
-  list: object[]
+  list: [],
+  favourites: [],
+  cart: [],
+  isLoading: boolean,
+  error: null | string,
+  pagesCount: null | string
 }

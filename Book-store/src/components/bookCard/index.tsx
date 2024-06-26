@@ -1,10 +1,9 @@
 import { NavLink } from 'react-router-dom'
 import { FaRegHeart } from 'react-icons/fa'
 import { MdOutlineShoppingCart } from 'react-icons/md'
-import './index.scss'
 import { useAppDispatch } from '../../types/hooks'
-// import { addBookToCart } from '../../redux/book-slice'
 import { toggleFavouriteById, addBookToCart } from '../../redux/books-slice'
+import './index.scss'
 
 interface Props {
   id: string,
@@ -21,24 +20,22 @@ export function BookCard (props: Props) {
     dispatch(toggleFavouriteById(props.id))
   }
 
-  // Не работает, т.к. обработчик на одну книгу, а не на массив
   function handleClickAddToCart () {
     dispatch(addBookToCart(props.id))
   }
 
-  function displayFavourite () {
-    if (props.isFavorite === true) {
-      return null
-    } else {
-      <FaRegHeart className="book-icon" onClick={handleClickToogleFavourite}/>
-    }
-  }
+  // function displayFavourite () {
+  //   if (props.isFavorite === true) {
+  //     return null
+  //   } else {
+  //     <FaRegHeart className="book-icon" onClick={handleClickToogleFavourite}/>
+  //   }
+  // }
 
   return (
     <div className="book-card">
       <div className="book-card__image">
         <div className="book-card__icons">
-          {/* {displayFavourite()} */}
           <FaRegHeart className="book-icon" onClick={handleClickToogleFavourite}/>
           <MdOutlineShoppingCart className="book-icon" onClick={handleClickAddToCart}/>
         </div>
@@ -50,7 +47,6 @@ export function BookCard (props: Props) {
       <span className="book-card__info">{props.info}</span>
       <div className="book-card__features">
         <span className="book-card__features__price">{props.price}</span>
-        <span className="book-card__features__rating">5 stars</span>
       </div>
     </div>
   )
