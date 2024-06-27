@@ -10,8 +10,10 @@ a{
   text-decoration: none;
 }
 
-// #root {
-//   display: flex;
-//   flex-direction: column;
-//   min-height: 100dvh;
-// }
+.arrow-back {
+	width: 70px;
+	margin: 10px 0;
+	padding-left: 20px;
+	font-size: 20px;
+	color: #000;
+}

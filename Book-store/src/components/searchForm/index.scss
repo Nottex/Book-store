@@ -4,10 +4,17 @@
   display: flex;
   justify-content: space-between;
   border: 1px solid gray;
+  border-radius: 10px;
 }
 
 #search-form__input {
   width: 80%;
   font-size: 20px;
   border: none;
+  outline: none;
+}
+
+.search-form__button {
+  border: none;
+  background-color: none;
 }

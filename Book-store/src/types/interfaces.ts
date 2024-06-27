@@ -30,7 +30,10 @@ export interface IBook {
   isFavourite: boolean,
   inCart: boolean,
   error: string | undefined,
-  desc: string
+  desc: string,
+  publisher: string
+  year: string,
+  pages: string
 }
 
 export interface IPagination {

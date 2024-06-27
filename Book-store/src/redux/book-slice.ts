@@ -49,7 +49,6 @@ const bookSlice = createSlice({
     addBookToCart: (state) => {
       const getCartFromStorage = localStorage.getItem('cart')!
       const cart = JSON.parse(getCartFromStorage)
-      console.log(state.data)
 
       if (cart.length > 0) {
         const bookInCart = cart.find((book: IBook) => book.id === state.data.id)
@@ -72,7 +71,6 @@ const bookSlice = createSlice({
       const getCartFromStorage = localStorage.getItem('cart')!
       const cart = JSON.parse(getCartFromStorage)
 
-      // const book = cart.find((book: IBook) => bookId === book.id)
       const bookIndex = cart.findIndex((book: IBook) => bookId === book.id)
 
       state.data.inCart = false
@@ -110,9 +108,6 @@ const bookSlice = createSlice({
 
           if (bookInCart) {
             state.data.inCart = true
-            console.log(state.data.inCart)
-          } else {
-            console.log('нет в корзине')
           }
         }
       })

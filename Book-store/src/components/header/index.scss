@@ -15,10 +15,12 @@
 
 .search-form__icon {
   font-size: 25px;
+  background-color: none;
+  cursor: pointer;
 }
 
 .navbar__features {
-  width: 5%;
+  width: 6%;
   display: flex;
   justify-content: space-between;
 }

@@ -23,7 +23,7 @@ export function SearchForm () {
   return (
     <form className="navbar__search-form" onSubmit={handleSubmit} role="search">
       <input type="search" id="search-form__input" placeholder="Book name" onChange={handleChangeSearch} value={search} />
-      <button type="submit"><IoIosSearch className="search-form__icon" /></button>
+      <button type="submit" className="search-form__button" ><IoIosSearch className="search-form__icon" /></button>
     </form>
   )
 }

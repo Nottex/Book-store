@@ -9,7 +9,7 @@ import './index.scss'
 export function BookCard (props: IBookCard) {
   const dispatch = useAppDispatch()
 
-  function handleClickToogleFavourite () {
+  function handleClickToggleFavourite () {
     dispatch(toggleFavouriteById(props.id))
   }
 
@@ -29,7 +29,7 @@ export function BookCard (props: IBookCard) {
     <div className="book-card">
       <div className="book-card__image">
         <div className="book-card__icons">
-          <FaRegHeart className="book-icon" onClick={handleClickToogleFavourite}/>
+          <FaRegHeart className="book-icon" onClick={handleClickToggleFavourite}/>
           <MdOutlineShoppingCart className="book-icon" onClick={handleClickAddToCart}/>
         </div>
         <img src={props.image} alt="" />

@@ -60,7 +60,7 @@ export const booksSlice = createSlice({
 
       state.favourites = getFavouritesFromLocalStorage()
     },
-    addBookToCart: (state, action: PayloadAction<string>) => {
+    addBookToCart: (state, action: PayloadAction<string | undefined>) => {
       state.cart = getCartFromLocalStorage()
       const bookId = action.payload
 

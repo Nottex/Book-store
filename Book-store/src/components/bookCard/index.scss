@@ -5,6 +5,9 @@
   max-width: 400px;
   align-items: stretch;
   flex-wrap: wrap;
+  border: 1px solid;
+  border-radius: 10px;
+  overflow:hidden;
 }
 
 .book-card__image {
@@ -12,7 +15,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: gray;
+  background-color: #e7d7b9;
   position: relative;
 }
 
@@ -46,6 +49,7 @@
   font-size: 22px;
   margin-top: 10px;
   flex-grow: 3;
+  padding: 0 10px;
 }
 
 .book-card__info {
@@ -53,6 +57,7 @@
   color: gray;
   font-size: 18px;
   flex-grow: 2;
+  padding: 0 10px;
 }
 
 .book-card__features {
@@ -64,5 +69,6 @@
 .book-card__features__price {
   font-size: 20px;
   font-weight: bold;
+  padding: 5px 10px;
 }
 
