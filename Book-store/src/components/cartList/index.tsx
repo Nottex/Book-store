@@ -27,7 +27,7 @@ export function CartList () {
     if (books.length > 0) return
 
     dispatch(fetchNewBooks())
-  }, [bookState])
+  }, [bookState, books])
 
   function totalPriceValue () {
     let totalPrice = 0

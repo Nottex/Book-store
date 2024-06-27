@@ -14,7 +14,8 @@ export interface IBookSmallCard {
   info: string,
   price: string,
   isFavourite?: boolean,
-  rating?: string
+  rating?: string,
+  favouritePage?: string
 }
 
 export interface IBook {

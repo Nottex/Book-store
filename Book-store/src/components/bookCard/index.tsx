@@ -51,9 +51,7 @@ export function BookCard (props: IBookCard) {
     <div className="book-card">
       <div className="book-card__image">
         <div className="book-card__icons">
-          {/* <FaRegHeart className="book-icon" onClick={handleClickToggleFavourite}/> */}
           {displayFavouriteIcon()}
-          {/* <MdOutlineShoppingCart className="book-icon" onClick={handleClickAddToCart}/> */}
           {displayCartIcon()}
         </div>
         <img src={props.image} alt="" />

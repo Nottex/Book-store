@@ -38,6 +38,7 @@ export function FavouriteList () {
           price={book.price}
           isFavourite={book.isFavourite}
           rating={book.rating}
+          favouritePage="true"
        />)
     } else {
       return <div>0 favourite books</div>
