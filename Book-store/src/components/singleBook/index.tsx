@@ -10,12 +10,15 @@ import { RootState } from '../../redux/store'
 import './index.scss'
 import { getCartFromLocalStorage } from '../../utils/getCartFromLocalStorage'
 import { IBook } from '../../types/interfaces'
+import { getFavouritesFromLocalStorage } from '../../utils/getFavouritesFromLocalStorage'
+import { MdFavorite } from 'react-icons/md'
 
 export function SingleBook () {
   const { bookId } = useParams()
   const book = useAppSelector((state: RootState) => state.book.data)
   const books = useAppSelector((state: RootState) => state.books.list)
   const booksInCart = getCartFromLocalStorage()
+  const favourites = getFavouritesFromLocalStorage()
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -53,6 +56,19 @@ export function SingleBook () {
     dispatch(addBookToCart())
   }
 
+  function displayFavouriteIcon () {
+    if (favourites && favourites.length > 0) {
+      const bookInFavourites: undefined | IBook = favourites.find((item: IBook) => item.id === book.id)
+      if (bookInFavourites) {
+        return <MdFavorite className="book-icon" onClick={handleClickToggleFavourites}/>
+      } else {
+        return <FaRegHeart className="book-icon" onClick={handleClickToggleFavourites}/>
+      }
+    } else {
+      return <FaRegHeart className="book-icon" onClick={handleClickToggleFavourites}/>
+    }
+  }
+
   return (
     <>
       <Title>{book.title}</Title>
@@ -65,7 +81,7 @@ export function SingleBook () {
         <div className="single-book__card__header">
           <div className="single-book__card__image">
             <div className="single-book__image__icon">
-              <FaRegHeart className="book-icon" onClick={handleClickToggleFavourites}/>
+              {displayFavouriteIcon()}
             </div>
             <img src={book.image} alt="" />
           </div>

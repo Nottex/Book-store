@@ -3,9 +3,7 @@ import { useAppDispatch } from '../../types/hooks'
 import { toggleFavouriteById } from '../../redux/books-slice'
 import { removeBookFromCart } from '../../redux/book-slice'
 import { IBookSmallCard } from '../../types/interfaces'
-import { FaRegHeart } from 'react-icons/fa'
 import { MdFavorite } from 'react-icons/md'
-import { IoStar } from 'react-icons/io5'
 import './index.scss'
 
 export function BookCardSmall (props: IBookSmallCard) {
@@ -30,9 +28,6 @@ export function BookCardSmall (props: IBookSmallCard) {
   return (
     <div className="book-card-sm">
       <div className="book-card-sm__image">
-        <div className="book-card-sm__icons">
-          <FaRegHeart className="book-icon-sm" onClick={toggleFavourite}/>
-        </div>
         <img src={props.image} alt="" />
       </div>
       <div className="book-card-sm__info">
@@ -48,7 +43,6 @@ export function BookCardSmall (props: IBookSmallCard) {
       </div>
       <div className="book-card-sm__features">
         <span className="book-card-sm__features__price">{props.price}</span>
-        <span className="book-card-sm__features__rating">{props.rating}<IoStar /></span>
         {renderIcon()}
       </div>
     </div>

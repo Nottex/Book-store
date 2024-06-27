@@ -87,7 +87,7 @@ const bookSlice = createSlice({
       })
       .addCase(fetchBook.fulfilled, (state, action) => {
         state.isLoading = false
-        state.data = { ...action.payload, id: action.payload.isbn13, isFavourite: false, inCart: false }
+        state.data = { ...action.payload, id: action.payload.isbn13, isFavourite: false, inCart: false, count: 0 }
 
         const getFavouritesFromStorage = localStorage.getItem('favourites')!
         const favouritesBooks = JSON.parse(getFavouritesFromStorage)

@@ -29,7 +29,6 @@ export function Header () {
         <div className="features__favourites">
           <NavLink className="features-icon" to="/favourites"><FaRegHeart /></NavLink>
           <span className="features-icon__counter">{favourites ? favourites.length : 0}</span>
-          <div className="feature-icon__circle"></div>
         </div>
         <div className="features__cart">
           <NavLink className="features-icon" to="/cart"><MdOutlineShoppingCart /></NavLink>

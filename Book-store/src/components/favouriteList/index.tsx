@@ -46,7 +46,7 @@ export function FavouriteList () {
 
   return (
     <>
-      <NavLink to={'..'} onClick={(e) => {
+      <NavLink to={'..'} className="arrow-back" onClick={(e) => {
         e.preventDefault()
         navigate(-1)
       }}

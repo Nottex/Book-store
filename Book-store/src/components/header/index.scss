@@ -20,7 +20,7 @@
 }
 
 .navbar__features {
-  width: 6%;
+  width: 8%;
   display: flex;
   justify-content: space-between;
 }
@@ -28,4 +28,8 @@
 .features-icon {
   font-size: 20px;
   color: #000;
+}
+
+.features-icon__counter {
+  margin-left: 5px
 }
