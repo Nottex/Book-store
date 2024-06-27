@@ -6,12 +6,12 @@ export interface IBooksState {
   cart: IBook[],
   isLoading: boolean,
   error: string | undefined | null,
-  pagesCount: null | number
+  pagesCount: null | number,
 }
 
 export interface IBookState {
   data: IBook,
   cart: IBook[],
   isLoading: boolean,
-  error: string | undefined | null
+  error: string | undefined | null,
 }

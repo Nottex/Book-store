@@ -11,11 +11,13 @@ export interface IBookSmallCard {
   id: string | undefined,
   image: string,
   title: string,
-  info: string,
+  info: string | undefined,
   price: string,
   isFavourite?: boolean,
   rating?: string,
-  favouritePage?: string
+  favouritePage?: string,
+  count?: number,
+  subtitle?: string
 }
 
 export interface IBook {

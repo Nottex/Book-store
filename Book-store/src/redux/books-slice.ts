@@ -94,7 +94,7 @@ export const booksSlice = createSlice({
         state.isLoading = false
 
         state.list = action.payload.books.map((book: IBook) => {
-          return { ...book, id: book.isbn13, isFavourite: false, inCart: false }
+          return { ...book, id: book.isbn13, isFavourite: false, inCart: false, count: 1 }
         })
 
         state.favourites = getFavouritesFromLocalStorage()
@@ -110,7 +110,7 @@ export const booksSlice = createSlice({
       .addCase(fetchSearchBooks.fulfilled, (state, action) => {
         state.isLoading = false
         state.list = action.payload.books.map((book: IBook) => {
-          return { ...book, id: book.isbn13, isFavourite: false, inCart: false }
+          return { ...book, id: book.isbn13, isFavourite: false, inCart: false, count: 1 }
         })
         state.pagesCount = Math.ceil(action.payload.total / 10)
 

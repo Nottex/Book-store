@@ -4,7 +4,8 @@ import { BookCardSmall } from '../bookCardSmall'
 import { useEffect, useState } from 'react'
 import { fetchNewBooks } from '../../redux/books-slice'
 import { getCartFromLocalStorage } from '../../utils/getCartFromLocalStorage'
-import { IBook } from '../../types/interfaces'
+import { IBook, IBookSmallCard } from '../../types/interfaces'
+import { FaLongArrowAltLeft } from 'react-icons/fa'
 
 export function CartList () {
   const navigate = useNavigate()
@@ -45,7 +46,7 @@ export function CartList () {
     if (error) return <div className="alert alert-danger">{error}</div>
 
     if (booksFromCart && booksFromCart.length > 0) {
-      return booksFromCart.map((book: IBook) => <BookCardSmall key={book.id} id={book.id} title={book.title} info={book.subtitle} image={book.image} price={book.price} />)
+      return booksFromCart.map((book: IBookSmallCard) => <BookCardSmall key={book.id} id={book.id} title={book.title} info={book.subtitle} image={book.image} price={book.price} count={book.count}/>)
     } else {
       return <div>0 Books in cart</div>
     }
@@ -53,20 +54,17 @@ export function CartList () {
 
   return (
     <>
-      <NavLink to={'..'}
-        onClick={(e) => {
-          e.preventDefault()
-          navigate(-1)
-        }}
-      >
-        Go back (-1)</NavLink>
+      <NavLink to={'..'} className="arrow-back" onClick={(e) => {
+        e.preventDefault()
+        navigate(-1)
+      }}
+      ><FaLongArrowAltLeft /></NavLink>
+      <div className="cart-counter" style={{ margin: 30, fontSize: 20 }}>
+        <span>Total: ${totalPriceCounter}</span>
+      </div>
       <div className="cards__wrapper">
-        <div className="cart-counter" style={{ margin: 30, fontSize: 20 }}>
-          <span>Total: ${totalPriceCounter}</span>
-        </div>
         {renderBooks()}
       </div>
-
     </>
   )
 }

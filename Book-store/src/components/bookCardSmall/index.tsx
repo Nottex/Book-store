@@ -50,7 +50,7 @@ export function BookCardSmall (props: IBookSmallCard) {
     } else {
       return <div className="book-card-sm__counter">
                 <span>-</span>
-                <span>0</span>
+                <span>{props.count}</span>
                 <span>+</span>
               </div>
     }
