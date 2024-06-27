@@ -11,13 +11,14 @@ import { getFavouritesFromLocalStorage } from '../../utils/getFavouritesFromLoca
 export function Header () {
   const books = useAppSelector(state => state.books.list)
   const bookState = useAppSelector(state => state.book)
+  const cartList = useAppSelector(state => state.books.cart)
 
   const cart = getCartFromLocalStorage()
   const favourites = getFavouritesFromLocalStorage()
 
   useEffect(() => {
 
-  }, [books, bookState])
+  }, [books, bookState, cartList])
 
   return (
     <header className="navbar">

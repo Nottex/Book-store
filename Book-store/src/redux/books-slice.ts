@@ -83,6 +83,33 @@ export const booksSlice = createSlice({
       }
       setCartToLocalSorage(state.cart)
       state.cart = getCartFromLocalStorage()
+    },
+    countIncrement: (state, action: PayloadAction<string | undefined>) => {
+      state.cart = getCartFromLocalStorage()
+      const bookId = action.payload
+
+      const bookInCart = state.cart.find(book => book.id === bookId)
+
+      if (bookInCart) {
+        bookInCart.count = bookInCart.count + 1
+      }
+
+      setCartToLocalSorage(state.cart)
+    },
+    countDecrement: (state, action: PayloadAction<string | undefined>) => {
+      state.cart = getCartFromLocalStorage()
+      const bookId = action.payload
+
+      const bookInCart = state.cart.find(book => book.id === bookId)
+      const bookIndex = state.cart.findIndex(book => book.id === bookId)
+
+      if (bookInCart && bookInCart.count > 1) {
+        bookInCart.count = bookInCart.count - 1
+      } else {
+        state.cart.splice(bookIndex, 1)
+      }
+
+      setCartToLocalSorage(state.cart)
     }
   },
   extraReducers: (builder) => {
@@ -124,6 +151,6 @@ export const booksSlice = createSlice({
   }
 })
 
-export const { toggleFavouriteById, addBookToCart } = booksSlice.actions
+export const { toggleFavouriteById, addBookToCart, countIncrement, countDecrement } = booksSlice.actions
 
 export const booksReducer = booksSlice.reducer

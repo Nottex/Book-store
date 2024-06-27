@@ -14,7 +14,7 @@ export function BooksList () {
   const isLoading = useAppSelector(state => state.books.isLoading)
 
   useEffect(() => {
-    if (books.length > 0) return
+    if (books.length > 15) return
 
     dispatch(fetchNewBooks())
   }, [dispatch, books])

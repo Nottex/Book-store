@@ -14,6 +14,7 @@ export function CartList () {
   const bookState = useAppSelector(state => state.book)
 
   const books = useAppSelector(state => state.books.list)
+  const cart = useAppSelector(state => state.books.cart)
 
   const [totalPriceCounter, setTotalPriceCounter] = useState(0)
 
@@ -28,13 +29,13 @@ export function CartList () {
     if (books.length > 0) return
 
     dispatch(fetchNewBooks())
-  }, [bookState, books])
+  }, [bookState, books, cart])
 
   function totalPriceValue () {
     let totalPrice = 0
     if (booksFromCart && booksFromCart.length > 0) {
       booksFromCart.forEach((book: IBook) => {
-        totalPrice += Number(book.price.slice(1))
+        totalPrice += Number(book.price.slice(1, 6) * book.count)
       })
     }
     setTotalPriceCounter(totalPrice)

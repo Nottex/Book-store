@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useAppDispatch } from '../../types/hooks'
-import { toggleFavouriteById, addBookToCart } from '../../redux/books-slice'
+import { toggleFavouriteById, addBookToCart, countIncrement, countDecrement } from '../../redux/books-slice'
 import { removeBookFromCart } from '../../redux/book-slice'
 import { IBookSmallCard, IBook } from '../../types/interfaces'
 import { MdFavorite, MdOutlineShoppingCart } from 'react-icons/md'
@@ -44,14 +44,22 @@ export function BookCardSmall (props: IBookSmallCard) {
     }
   }
 
+  function incrementCounter () {
+    dispatch(countIncrement(props.id))
+  }
+
+  function decrementCounter () {
+    dispatch(countDecrement(props.id))
+  }
+
   function renderCounter () {
     if (props.favouritePage) {
       return null
     } else {
       return <div className="book-card-sm__counter">
-                <span>-</span>
+                <span className="counter-symbol" onClick={decrementCounter}>-</span>
                 <span>{props.count}</span>
-                <span>+</span>
+                <span className="counter-symbol" onClick={incrementCounter}>+</span>
               </div>
     }
   }

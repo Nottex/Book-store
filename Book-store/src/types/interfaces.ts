@@ -16,7 +16,7 @@ export interface IBookSmallCard {
   isFavourite?: boolean,
   rating?: string,
   favouritePage?: string,
-  count?: number,
+  count?: number | undefined,
   subtitle?: string
 }
 
@@ -36,7 +36,8 @@ export interface IBook {
   desc: string,
   publisher: string
   year: string,
-  pages: string
+  pages: string,
+  count: number
 }
 
 export interface IPagination {

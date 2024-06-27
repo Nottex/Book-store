@@ -48,7 +48,9 @@
 }
 
 .book-card-sm__counter span {
-  font-size: 18px;
+  font-size: 22px;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .book-card-sm__features {
@@ -60,4 +62,8 @@
 
 .book-card-sm__features__close {
   cursor: pointer;
+}
+
+.counter-symbol {
+  width: 30px;
 }
