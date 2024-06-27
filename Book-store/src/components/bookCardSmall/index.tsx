@@ -2,22 +2,13 @@ import { NavLink } from 'react-router-dom'
 import { useAppDispatch } from '../../types/hooks'
 import { toggleFavouriteById } from '../../redux/books-slice'
 import { removeBookFromCart } from '../../redux/book-slice'
+import { IBookSmallCard } from '../../types/interfaces'
 import { FaRegHeart } from 'react-icons/fa'
 import { MdFavorite } from 'react-icons/md'
 import { IoStar } from 'react-icons/io5'
 import './index.scss'
 
-interface PropsSmall {
-  id: string,
-  image: string,
-  title: string,
-  info: string,
-  price: string,
-  isFavourite?: boolean,
-  rating?: string
-}
-
-export function BookCardSmall (props: PropsSmall) {
+export function BookCardSmall (props: IBookSmallCard) {
   const dispatch = useAppDispatch()
 
   function handleClickRemoveFromCart () {

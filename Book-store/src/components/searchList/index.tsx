@@ -5,6 +5,7 @@ import { fetchSearchBooks } from '../../redux/books-slice'
 import { BookCard } from '../bookCard'
 import { Title } from '../title'
 import { Pagination } from '../pagination'
+import { IBook } from '../../types/interfaces'
 
 export function SearchList () {
   const dispatch = useAppDispatch()
@@ -22,7 +23,7 @@ export function SearchList () {
 
     if (error) return <div className="alert alert-danger">{error}</div>
 
-    return books.map(book =>
+    return books.map((book: IBook) =>
       <BookCard
         key={book.id}
         id={book.id}

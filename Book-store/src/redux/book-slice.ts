@@ -1,16 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { requestBook } from '../services/books'
 import { getCartFromLocalStorage } from '../utils/getCartFromLocalStorage'
+import { IBookState } from '../types/booksState'
 
-export const fetchBook = createAsyncThunk('book/fetchBook', async (id, { rejectWithValue }) => {
+export const fetchBook = createAsyncThunk('book/fetchBook', async (id: string | undefined, { rejectWithValue }) => {
   try {
     return await requestBook(id)
   } catch (e) {
-    return rejectWithValue(e.message)
+    return rejectWithValue((e as Error).message)
   }
 })
 
-const initialState = {
+const initialState: IBookState = {
   data: {},
   isLoading: false,
   cart: [],

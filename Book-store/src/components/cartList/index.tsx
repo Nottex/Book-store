@@ -4,6 +4,7 @@ import { BookCardSmall } from '../bookCardSmall'
 import { useEffect, useState } from 'react'
 import { fetchNewBooks } from '../../redux/books-slice'
 import { getCartFromLocalStorage } from '../../utils/getCartFromLocalStorage'
+import { IBook } from '../../types/interfaces'
 
 export function CartList () {
   const navigate = useNavigate()
@@ -31,7 +32,7 @@ export function CartList () {
   function totalPriceValue () {
     let totalPrice = 0
     if (booksFromCart && booksFromCart.length > 0) {
-      booksFromCart.forEach(book => {
+      booksFromCart.forEach((book: IBook) => {
         totalPrice += Number(book.price.slice(1))
       })
     }
@@ -44,7 +45,7 @@ export function CartList () {
     if (error) return <div className="alert alert-danger">{error}</div>
 
     if (booksFromCart && booksFromCart.length > 0) {
-      return booksFromCart.map((book) => <BookCardSmall key={book.id} id={book.id} title={book.title} info={book.subtitle} image={book.image} price={book.price} />)
+      return booksFromCart.map((book: IBook) => <BookCardSmall key={book.id} id={book.id} title={book.title} info={book.subtitle} image={book.image} price={book.price} />)
     } else {
       return <div>0 Books in cart</div>
     }

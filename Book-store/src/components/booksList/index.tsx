@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../types/hooks'
 import { BookCard } from '../bookCard'
 import './index.scss'
 import { fetchNewBooks } from '../../redux/books-slice'
+import { IBook } from '../../types/interfaces'
 
 export function BooksList () {
   const dispatch = useAppDispatch()
@@ -23,7 +24,7 @@ export function BooksList () {
 
     if (error) return <div className="alert alert-danger">{error}</div>
 
-    return books.map(book => <BookCard key={book.isbn13} id={book.isbn13} title={book.title} info={book.subtitle} image={book.image} price={book.price} />)
+    return books.map((book:IBook) => <BookCard key={book.isbn13} id={book.isbn13} title={book.title} info={book.subtitle} image={book.image} price={book.price} />)
   }
 
   return (

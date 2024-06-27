@@ -5,11 +5,12 @@ import { addBookToCart, fetchBook } from '../../redux/book-slice'
 import { fetchNewBooks, toggleFavouriteById } from '../../redux/books-slice'
 import { IoStar } from 'react-icons/io5'
 import { Title } from '../title'
+import { RootState } from '../../redux/store'
 
 export function SingleBook () {
   const { bookId } = useParams()
-  const book = useAppSelector(state => state.book.data)
-  const books = useAppSelector(state => state.books.list)
+  const book = useAppSelector((state: RootState) => state.book.data)
+  const books = useAppSelector((state: RootState) => state.books.list)
   const dispatch = useAppDispatch()
 
   useEffect(() => {

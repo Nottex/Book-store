@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { getFavouritesFromLocalStorage } from '../../utils/getFavouritesFromLocalStorage'
 import { BookCardSmall } from '../bookCardSmall'
 import { FaLongArrowAltLeft } from 'react-icons/fa'
+import { IBook } from '../../types/interfaces'
 
 export function FavouriteList () {
   const dispatch = useAppDispatch()
@@ -27,7 +28,7 @@ export function FavouriteList () {
     if (error) return <div className="alert alert-danger">{error}</div>
 
     if (favouriteBooks && favouriteBooks.length > 0) {
-      return favouriteBooks.map((book) =>
+      return favouriteBooks.map((book: IBook) =>
         <BookCardSmall
           key={book.id}
           id={book.id}

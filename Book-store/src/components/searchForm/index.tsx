@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './index.scss'
 import { IoIosSearch } from 'react-icons/io'
@@ -7,11 +7,11 @@ export function SearchForm () {
   const [search, setSearch] = useState('')
   const navigate = useNavigate()
 
-  function handleChangeSearch (event) {
+  function handleChangeSearch (event: React.ChangeEvent<HTMLInputElement>) {
     setSearch(event.target.value)
   }
 
-  function handleSubmit (event) {
+  function handleSubmit (event: FormEvent) {
     event.preventDefault()
     if (search === '') {
       return alert('Заполните поле поиска')

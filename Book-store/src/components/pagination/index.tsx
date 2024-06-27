@@ -2,8 +2,9 @@ import { useParams, NavLink } from 'react-router-dom'
 import { useAppSelector } from '../../types/hooks'
 import { buildPaginationScheme } from '../../utils/buildPaginationScheme'
 import './index.scss'
+import { IPagination } from '../../types/interfaces'
 
-export function Pagination (props) {
+export function Pagination (props: IPagination) {
   const { page: currentPage } = useParams()
   const pagesCount = useAppSelector(state => state.books.pagesCount)
 

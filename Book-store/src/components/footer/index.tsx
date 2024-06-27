@@ -1,7 +1,6 @@
-import { JSX } from 'react'
 import './index.scss'
 
-export function Footer (): JSX.Element {
+export function Footer () {
   return (
     <footer className="footer">
       <span className="footer__text footer__copyright">

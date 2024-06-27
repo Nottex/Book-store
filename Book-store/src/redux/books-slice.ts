@@ -1,28 +1,27 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from './store'
 import { IBooksState } from '../types/booksState'
 import { requestNewBooks, requestSearchBooks } from '../services/books'
 import { getFavouritesFromLocalStorage } from '../utils/getFavouritesFromLocalStorage'
 import { setFavouritesToLocalSorage } from '../utils/setFavouritesToLocalStorage'
 import { getCartFromLocalStorage } from '../utils/getCartFromLocalStorage'
 import { setCartToLocalSorage } from '../utils/setCartToLocalStorage'
+import { IBook, IFetchSearch } from '../types/interfaces'
 
 // Thunks
-
 export const fetchNewBooks = createAsyncThunk('books/fetchNewBooks', async (_, { rejectWithValue }) => {
   try {
     return await requestNewBooks()
   } catch (e) {
-    return rejectWithValue(e.message)
+    return rejectWithValue((e as Error).message)
   }
 })
 
-export const fetchSearchBooks = createAsyncThunk('books/fetchSearchBooks', async ({ query, page }, { rejectWithValue }) => {
+export const fetchSearchBooks = createAsyncThunk('books/fetchSearchBooks', async ({ query, page }: IFetchSearch, { rejectWithValue }) => {
   try {
     return await requestSearchBooks(query, page)
   } catch (e) {
-    return rejectWithValue(e.message)
+    return rejectWithValue((e as Error).message)
   }
 })
 
@@ -39,7 +38,7 @@ export const booksSlice = createSlice({
   name: 'books',
   initialState,
   reducers: {
-    toggleFavouriteById: (state, action) => {
+    toggleFavouriteById: (state, action: PayloadAction<string>) => {
       const bookId = action.payload
 
       const bookIndex = state.list.findIndex(book => book.id === bookId)
@@ -61,7 +60,7 @@ export const booksSlice = createSlice({
 
       state.favourites = getFavouritesFromLocalStorage()
     },
-    addBookToCart: (state, action) => {
+    addBookToCart: (state, action: PayloadAction<string>) => {
       state.cart = getCartFromLocalStorage()
       const bookId = action.payload
 
@@ -94,7 +93,7 @@ export const booksSlice = createSlice({
       .addCase(fetchNewBooks.fulfilled, (state, action) => {
         state.isLoading = false
 
-        state.list = action.payload.books.map((book) => {
+        state.list = action.payload.books.map((book: IBook) => {
           return { ...book, id: book.isbn13, isFavourite: false, inCart: false }
         })
 
@@ -110,7 +109,7 @@ export const booksSlice = createSlice({
       })
       .addCase(fetchSearchBooks.fulfilled, (state, action) => {
         state.isLoading = false
-        state.list = action.payload.books.map((book) => {
+        state.list = action.payload.books.map((book: IBook) => {
           return { ...book, id: book.isbn13, isFavourite: false, inCart: false }
         })
         state.pagesCount = Math.ceil(action.payload.total / 10)

@@ -3,17 +3,10 @@ import { FaRegHeart } from 'react-icons/fa'
 import { MdOutlineShoppingCart } from 'react-icons/md'
 import { useAppDispatch } from '../../types/hooks'
 import { toggleFavouriteById, addBookToCart } from '../../redux/books-slice'
+import { IBookCard } from '../../types/interfaces'
 import './index.scss'
 
-interface Props {
-  id: string,
-  image: string,
-  title: string,
-  info: string,
-  price: string
-}
-
-export function BookCard (props: Props) {
+export function BookCard (props: IBookCard) {
   const dispatch = useAppDispatch()
 
   function handleClickToogleFavourite () {
