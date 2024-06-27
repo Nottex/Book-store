@@ -10,8 +10,8 @@ export interface IBooksState {
 }
 
 export interface IBookState {
-  data: object,
-  cart: [],
+  data: IBook,
+  cart: IBook[],
   isLoading: boolean,
-  error: null,
+  error: string | undefined | null
 }

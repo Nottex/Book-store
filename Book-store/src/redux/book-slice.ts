@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { requestBook } from '../services/books'
 import { getCartFromLocalStorage } from '../utils/getCartFromLocalStorage'
 import { IBookState } from '../types/booksState'
+import { IBook } from '../types/interfaces'
 
 export const fetchBook = createAsyncThunk('book/fetchBook', async (id: string | undefined, { rejectWithValue }) => {
   try {
@@ -12,7 +13,7 @@ export const fetchBook = createAsyncThunk('book/fetchBook', async (id: string | 
 })
 
 const initialState: IBookState = {
-  data: {},
+  data: {} as IBook,
   isLoading: false,
   cart: [],
   error: null
@@ -25,13 +26,13 @@ const bookSlice = createSlice({
     toggleFavourite: (state) => {
       state.data.isFavourite = !state.data.isFavourite
 
-      const getFavouritesFromStorage = localStorage.getItem('favourites')
+      const getFavouritesFromStorage = localStorage.getItem('favourites')!
       const favouritesBooks = JSON.parse(getFavouritesFromStorage)
 
       if (favouritesBooks.length > 0) {
-        const bookInFavourites = favouritesBooks.find(book => book.id === state.data.id)
+        const bookInFavourites = favouritesBooks.find((book: IBook) => book.id === state.data.id)
         if (bookInFavourites) {
-          const bookId = favouritesBooks.findIndex(book => book.id === state.data.id)
+          const bookId = favouritesBooks.findIndex((book: IBook) => book.id === state.data.id)
 
           favouritesBooks.splice(bookId, 1)
 
@@ -46,12 +47,12 @@ const bookSlice = createSlice({
       }
     },
     addBookToCart: (state) => {
-      const getCartFromStorage = localStorage.getItem('cart')
+      const getCartFromStorage = localStorage.getItem('cart')!
       const cart = JSON.parse(getCartFromStorage)
       console.log(state.data)
 
       if (cart.length > 0) {
-        const bookInCart = cart.find(book => book.id === state.data.id)
+        const bookInCart = cart.find((book: IBook) => book.id === state.data.id)
         if (bookInCart) {
           state.data.inCart = true
         } else {
@@ -68,11 +69,11 @@ const bookSlice = createSlice({
     removeBookFromCart: (state, action) => {
       const bookId = action.payload
 
-      const getCartFromStorage = localStorage.getItem('cart')
+      const getCartFromStorage = localStorage.getItem('cart')!
       const cart = JSON.parse(getCartFromStorage)
 
-      const book = cart.find(book => bookId === book.id)
-      const bookIndex = cart.findIndex(book => bookId === book.id)
+      // const book = cart.find((book: IBook) => bookId === book.id)
+      const bookIndex = cart.findIndex((book: IBook) => bookId === book.id)
 
       state.data.inCart = false
       cart.splice(bookIndex, 1)
@@ -90,22 +91,22 @@ const bookSlice = createSlice({
         state.isLoading = false
         state.data = { ...action.payload, id: action.payload.isbn13, isFavourite: false, inCart: false }
 
-        const getFavouritesFromStorage = localStorage.getItem('favourites')
+        const getFavouritesFromStorage = localStorage.getItem('favourites')!
         const favouritesBooks = JSON.parse(getFavouritesFromStorage)
 
         if (favouritesBooks.length > 0) {
-          const bookInFavourites = favouritesBooks.find(book => book.id === state.data.id)
+          const bookInFavourites = favouritesBooks.find((book: IBook) => book.id === state.data.id)
 
           if (bookInFavourites) {
             state.data.isFavourite = true
           }
         }
 
-        const getCartFromStorage = localStorage.getItem('cart')
+        const getCartFromStorage = localStorage.getItem('cart')!
         const cart = JSON.parse(getCartFromStorage)
 
         if (cart.length > 0) {
-          const bookInCart = cart.find(book => book.id === state.data.id)
+          const bookInCart = cart.find((book: IBook) => book.id === state.data.id)
 
           if (bookInCart) {
             state.data.inCart = true

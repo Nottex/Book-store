@@ -29,7 +29,8 @@ export interface IBook {
   rating?: string,
   isFavourite: boolean,
   inCart: boolean,
-  error: string | undefined
+  error: string | undefined,
+  desc: string
 }
 
 export interface IPagination {

@@ -38,7 +38,7 @@ export const booksSlice = createSlice({
   name: 'books',
   initialState,
   reducers: {
-    toggleFavouriteById: (state, action: PayloadAction<string>) => {
+    toggleFavouriteById: (state, action: PayloadAction<string | undefined>) => {
       const bookId = action.payload
 
       const bookIndex = state.list.findIndex(book => book.id === bookId)
