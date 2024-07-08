@@ -45,23 +45,20 @@ export const booksSlice = createSlice({
 
       const book = state.list[bookIndex]
 
-      state.list[bookIndex].isFavourite = !state.list[bookIndex].isFavourite
-
-      const indexBookFromFavourites = state.favourites.findIndex((element) => element.id === book.id)
-      const isBookInFavourites = state.favourites.find((element) => element.id === book.id)
+      const indexBookFromFavourites = state.favourites.findIndex((element) => element.id === bookId)
+      const isBookInFavourites = state.favourites.find((element) => element.id === bookId)
 
       if (isBookInFavourites) {
         state.favourites.splice(indexBookFromFavourites, 1)
       } else {
+        state.list[bookIndex].isFavourite = !state.list[bookIndex].isFavourite
         state.favourites.push(book)
       }
 
       setFavouritesToLocalSorage(state.favourites)
-
-      state.favourites = getFavouritesFromLocalStorage()
     },
     addBookToCart: (state, action: PayloadAction<string | undefined>) => {
-      state.cart = getCartFromLocalStorage()
+      // state.cart = getCartFromLocalStorage()
       const bookId = action.payload
 
       const bookIndex = state.list.findIndex(book => book.id === bookId)
@@ -82,7 +79,7 @@ export const booksSlice = createSlice({
         state.cart.push(bookItem)
       }
       setCartToLocalSorage(state.cart)
-      state.cart = getCartFromLocalStorage()
+      // state.cart = getCartFromLocalStorage()
     },
     countIncrement: (state, action: PayloadAction<string | undefined>) => {
       state.cart = getCartFromLocalStorage()

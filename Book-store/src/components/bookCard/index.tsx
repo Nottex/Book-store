@@ -4,6 +4,7 @@ import { MdOutlineShoppingCart, MdFavorite } from 'react-icons/md'
 import { useAppDispatch } from '../../types/hooks'
 import { toggleFavouriteById, addBookToCart } from '../../redux/books-slice'
 import { IBookCard, IBook } from '../../types/interfaces'
+import { BsCartCheckFill } from 'react-icons/bs'
 import './index.scss'
 import { getFavouritesFromLocalStorage } from '../../utils/getFavouritesFromLocalStorage'
 import { getCartFromLocalStorage } from '../../utils/getCartFromLocalStorage'
@@ -38,7 +39,7 @@ export function BookCard (props: IBookCard) {
     if (cart && cart.length > 0) {
       const bookInCart: undefined | IBook = cart.find((book: IBook) => book.id === props.id)
       if (bookInCart) {
-        return
+        return <BsCartCheckFill className="book-icon" disabled={true} />
       } else {
         return <MdOutlineShoppingCart className="book-icon" onClick={handleClickAddToCart}/>
       }

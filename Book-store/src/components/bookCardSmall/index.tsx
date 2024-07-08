@@ -4,6 +4,7 @@ import { toggleFavouriteById, addBookToCart, countIncrement, countDecrement } fr
 import { removeBookFromCart } from '../../redux/book-slice'
 import { IBookSmallCard, IBook } from '../../types/interfaces'
 import { MdFavorite, MdOutlineShoppingCart } from 'react-icons/md'
+import { BsCartCheckFill } from 'react-icons/bs'
 import './index.scss'
 import { getCartFromLocalStorage } from '../../utils/getCartFromLocalStorage'
 
@@ -27,7 +28,7 @@ export function BookCardSmall (props: IBookSmallCard) {
     if (cart && cart.length > 0) {
       const bookInCart: undefined | IBook = cart.find((book: IBook) => book.id === props.id)
       if (bookInCart) {
-        return
+        return <BsCartCheckFill className="book-icon-sm" disabled={true} />
       } else {
         return <MdOutlineShoppingCart className="book-icon-sm" onClick={handleClickAddToCart}/>
       }

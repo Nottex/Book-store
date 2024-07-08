@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../types/hooks'
 import { fetchNewBooks } from '../../redux/books-slice'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { getFavouritesFromLocalStorage } from '../../utils/getFavouritesFromLocalStorage'
 import { BookCardSmall } from '../bookCardSmall'
 import { FaLongArrowAltLeft } from 'react-icons/fa'
 import { IBook } from '../../types/interfaces'
@@ -14,21 +13,21 @@ export function FavouriteList () {
   const error = useAppSelector(state => state.books.error)
   const isLoading = useAppSelector(state => state.books.isLoading)
 
-  const favouriteBooks = getFavouritesFromLocalStorage()
+  const favourites = useAppSelector(state => state.books.favourites)
 
   useEffect(() => {
     if (books.length > 0) return
 
     dispatch(fetchNewBooks())
-  }, [dispatch, favouriteBooks, books])
+  }, [dispatch, favourites, books])
 
   function renderBooks () {
     if (isLoading) return <div>Loading...</div>
 
     if (error) return <div className="alert alert-danger">{error}</div>
 
-    if (favouriteBooks && favouriteBooks.length > 0) {
-      return favouriteBooks.map((book: IBook) =>
+    if (favourites && favourites.length > 0) {
+      return favourites.map((book: IBook) =>
         <BookCardSmall
           key={book.id}
           id={book.id}

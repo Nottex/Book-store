@@ -7,11 +7,11 @@ import { IoStar } from 'react-icons/io5'
 import { FaLongArrowAltLeft, FaRegHeart } from 'react-icons/fa'
 import { Title } from '../title'
 import { RootState } from '../../redux/store'
-import './index.scss'
 import { getCartFromLocalStorage } from '../../utils/getCartFromLocalStorage'
 import { IBook } from '../../types/interfaces'
 import { getFavouritesFromLocalStorage } from '../../utils/getFavouritesFromLocalStorage'
 import { MdFavorite } from 'react-icons/md'
+import './index.scss'
 
 export function SingleBook () {
   const { bookId } = useParams()

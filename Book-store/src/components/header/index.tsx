@@ -1,24 +1,13 @@
-import { useEffect } from 'react'
 import './index.scss'
 import { FaRegHeart } from 'react-icons/fa'
 import { MdOutlineShoppingCart } from 'react-icons/md'
 import { NavLink } from 'react-router-dom'
 import { SearchForm } from '../searchForm'
 import { useAppSelector } from '../../types/hooks'
-import { getCartFromLocalStorage } from '../../utils/getCartFromLocalStorage'
-import { getFavouritesFromLocalStorage } from '../../utils/getFavouritesFromLocalStorage'
 
 export function Header () {
-  const books = useAppSelector(state => state.books.list)
-  const bookState = useAppSelector(state => state.book)
-  const cartList = useAppSelector(state => state.books.cart)
-
-  const cart = getCartFromLocalStorage()
-  const favourites = getFavouritesFromLocalStorage()
-
-  useEffect(() => {
-
-  }, [books, bookState, cartList])
+  const cart = useAppSelector(state => state.books.cart)
+  const favourites = useAppSelector(state => state.books.favourites)
 
   return (
     <header className="navbar">
