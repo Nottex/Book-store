@@ -1,18 +1,16 @@
 import { NavLink } from 'react-router-dom'
 import { FaRegHeart } from 'react-icons/fa'
 import { MdOutlineShoppingCart, MdFavorite } from 'react-icons/md'
-import { useAppDispatch } from '../../types/hooks'
+import { useAppDispatch, useAppSelector } from '../../types/hooks'
 import { toggleFavouriteById, addBookToCart } from '../../redux/books-slice'
 import { IBookCard, IBook } from '../../types/interfaces'
 import { BsCartCheckFill } from 'react-icons/bs'
 import './index.scss'
-import { getFavouritesFromLocalStorage } from '../../utils/getFavouritesFromLocalStorage'
-import { getCartFromLocalStorage } from '../../utils/getCartFromLocalStorage'
 
 export function BookCard (props: IBookCard) {
   const dispatch = useAppDispatch()
-  const favourites = getFavouritesFromLocalStorage()
-  const cart = getCartFromLocalStorage()
+  const favourites = useAppSelector(state => state.books.favourites)
+  const cart = useAppSelector(state => state.books.cart)
 
   function handleClickToggleFavourite () {
     dispatch(toggleFavouriteById(props.id))

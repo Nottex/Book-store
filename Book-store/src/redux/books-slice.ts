@@ -49,6 +49,7 @@ export const booksSlice = createSlice({
       const isBookInFavourites = state.favourites.find((element) => element.id === bookId)
 
       if (isBookInFavourites) {
+        // state.list[bookIndex].isFavourite = !state.list[bookIndex].isFavourite
         state.favourites.splice(indexBookFromFavourites, 1)
       } else {
         state.list[bookIndex].isFavourite = !state.list[bookIndex].isFavourite
@@ -116,13 +117,18 @@ export const booksSlice = createSlice({
       })
       .addCase(fetchNewBooks.fulfilled, (state, action) => {
         state.isLoading = false
-
-        state.list = action.payload.books.map((book: IBook) => {
-          return { ...book, id: book.isbn13, isFavourite: false, inCart: false, count: 1 }
-        })
-
         state.favourites = getFavouritesFromLocalStorage()
         state.cart = getCartFromLocalStorage()
+
+        state.list = action.payload.books.map((book: IBook) => {
+          return {
+            ...book,
+            id: book.isbn13,
+            isFavourite: state.favourites.find(elem => elem.id === book.id) ? true : false,
+            inCart: state.cart.find(elem => elem.id === book.id) ? true : false,
+            count: 1
+          }
+        })
       })
       .addCase(fetchNewBooks.rejected, (state, action) => {
         state.isLoading = false
@@ -133,13 +139,21 @@ export const booksSlice = createSlice({
       })
       .addCase(fetchSearchBooks.fulfilled, (state, action) => {
         state.isLoading = false
-        state.list = action.payload.books.map((book: IBook) => {
-          return { ...book, id: book.isbn13, isFavourite: false, inCart: false, count: 1 }
-        })
-        state.pagesCount = Math.ceil(action.payload.total / 10)
 
         state.favourites = getFavouritesFromLocalStorage()
         state.cart = getCartFromLocalStorage()
+
+        state.list = action.payload.books.map((book: IBook) => {
+          return {
+            ...book,
+            id: book.isbn13,
+            isFavourite: state.favourites.find(elem => elem.id === book.id) ? true : false,
+            inCart: state.cart.find(elem => elem.id === book.id) ? true : false,
+            count: 1
+          }
+        })
+
+        state.pagesCount = Math.ceil(action.payload.total / 10)
       })
       .addCase(fetchSearchBooks.rejected, (state, action) => {
         state.isLoading = false

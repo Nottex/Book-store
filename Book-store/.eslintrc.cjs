@@ -28,6 +28,7 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'import/no-absolute-path': 0,
-    'no-useless-return': 0
+    'no-useless-return': 0,
+    'no-unneeded-ternary': 0
   },
 }
