@@ -1,15 +1,13 @@
 import { useAppDispatch, useAppSelector } from '../../types/hooks'
 import { useParams, NavLink, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
-import { addBookToCart, fetchBook } from '../../redux/book-slice'
-import { fetchNewBooks, toggleFavouriteById } from '../../redux/books-slice'
+import { useEffect, useState } from 'react'
+import { fetchBook } from '../../redux/book-slice'
+import { fetchNewBooks, toggleFavouriteById, addBookToCart } from '../../redux/books-slice'
 import { IoStar } from 'react-icons/io5'
 import { FaLongArrowAltLeft, FaRegHeart } from 'react-icons/fa'
 import { Title } from '../title'
 import { RootState } from '../../redux/store'
-import { getCartFromLocalStorage } from '../../utils/getCartFromLocalStorage'
 import { IBook } from '../../types/interfaces'
-import { getFavouritesFromLocalStorage } from '../../utils/getFavouritesFromLocalStorage'
 import { MdFavorite } from 'react-icons/md'
 import './index.scss'
 
@@ -17,8 +15,11 @@ export function SingleBook () {
   const { bookId } = useParams()
   const book = useAppSelector((state: RootState) => state.book.data)
   const books = useAppSelector((state: RootState) => state.books.list)
-  const booksInCart = getCartFromLocalStorage()
-  const favourites = getFavouritesFromLocalStorage()
+
+  const favourites = useAppSelector((state: RootState) => state.books.favourites)
+  const booksInCart = useAppSelector((state: RootState) => state.books.cart)
+
+  const [activeTab, setActiveTab] = useState('description')
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -40,7 +41,7 @@ export function SingleBook () {
     }
 
     dispatch(fetchBook(bookId))
-  }, [bookId, dispatch])
+  }, [bookId, dispatch, books.length])
 
   if (!book) {
     return (
@@ -53,7 +54,7 @@ export function SingleBook () {
   }
 
   function handleClickAddToCart () {
-    dispatch(addBookToCart())
+    dispatch(addBookToCart(bookId))
   }
 
   function displayFavouriteIcon () {
@@ -66,6 +67,19 @@ export function SingleBook () {
       }
     } else {
       return <FaRegHeart className="book-icon" onClick={handleClickToggleFavourites}/>
+    }
+  }
+
+  function renderTabContent () {
+    switch (activeTab) {
+      case 'description':
+        return <p>{book.desc}</p>
+      case 'authors':
+        return <p>{book.authors}</p>
+      case 'publisher':
+        return <p>{book.publisher}</p>
+      default:
+        return null
     }
   }
 
@@ -108,7 +122,20 @@ export function SingleBook () {
           </div>
         </div>
         <div className="single-book__card__about">
-          <span className="single-book__about__description">{book.desc}</span>
+          <nav className="single-book__about-nav">
+            <button className={activeTab === 'description' ? 'nav-link active' : 'nav-link'} onClick={() => setActiveTab('description')}>
+              Description
+            </button>
+            <button className={activeTab === 'authors' ? 'nav-link active' : 'nav-link'} onClick={() => setActiveTab('authors')}>
+              Authors
+            </button>
+            <button className={activeTab === 'publisher' ? 'nav-link active' : 'nav-link'} onClick={() => setActiveTab('publisher')}>
+              Publisher
+            </button>
+          </nav>
+          <div className="single-book__about__description">
+            {renderTabContent()}
+          </div>
         </div>
       </div>
     </>

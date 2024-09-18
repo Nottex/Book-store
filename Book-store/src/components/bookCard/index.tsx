@@ -39,10 +39,10 @@ export function BookCard (props: IBookCard) {
       if (bookInCart) {
         return <BsCartCheckFill className="book-icon" disabled={true} />
       } else {
-        return <MdOutlineShoppingCart className="book-icon" onClick={handleClickAddToCart}/>
+        return <MdOutlineShoppingCart className="book-icon" onClick={handleClickAddToCart} />
       }
     } else {
-      return <MdOutlineShoppingCart className="book-icon" onClick={handleClickAddToCart}/>
+      return <MdOutlineShoppingCart className="book-icon" onClick={handleClickAddToCart} />
     }
   }
 

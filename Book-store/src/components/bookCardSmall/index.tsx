@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../types/hooks'
-import { toggleFavouriteById, addBookToCart, countIncrement, countDecrement } from '../../redux/books-slice'
-import { removeBookFromCart } from '../../redux/book-slice'
+import { toggleFavouriteById, addBookToCart, countIncrement, countDecrement, removeBookFromCart } from '../../redux/books-slice'
 import { IBookSmallCard, IBook } from '../../types/interfaces'
 import { MdFavorite, MdOutlineShoppingCart } from 'react-icons/md'
 import { BsCartCheckFill } from 'react-icons/bs'
@@ -10,7 +9,6 @@ import './index.scss'
 export function BookCardSmall (props: IBookSmallCard) {
   const dispatch = useAppDispatch()
   const cart = useAppSelector(state => state.books.cart)
-  const favourites = useAppSelector(state => state.books.favourites)
 
   function handleClickRemoveFromCart () {
     dispatch(removeBookFromCart(props.id))
@@ -38,8 +36,7 @@ export function BookCardSmall (props: IBookSmallCard) {
   }
 
   function renderIcon () {
-    const bookInFavourites: undefined | IBook = favourites.find((book: IBook) => book.id === props.id)
-    if (bookInFavourites) {
+    if (props.favouritePage) {
       return <MdFavorite className="book-card-sm__features__favourite" onClick={toggleFavourite}/>
     } else {
       return <span className="book-card-sm__features__close" onClick={handleClickRemoveFromCart}>X</span>
@@ -58,11 +55,13 @@ export function BookCardSmall (props: IBookSmallCard) {
     if (props.favouritePage) {
       return null
     } else {
-      return <div className="book-card-sm__counter">
-                <span className="counter-symbol" onClick={decrementCounter}>-</span>
-                <span>{props.count}</span>
-                <span className="counter-symbol" onClick={incrementCounter}>+</span>
-              </div>
+      return (
+        <div className="book-card-sm__counter">
+          <span className="counter-symbol" onClick={decrementCounter}>-</span>
+          <span>{props.count}</span>
+          <span className="counter-symbol" onClick={incrementCounter}>+</span>
+        </div>
+      )
     }
   }
 

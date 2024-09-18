@@ -10,8 +10,6 @@ export function CartList () {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const bookState = useAppSelector(state => state.book)
-
   const books = useAppSelector(state => state.books.list)
   const cart = useAppSelector(state => state.books.cart)
 
@@ -20,15 +18,13 @@ export function CartList () {
   const error = useAppSelector(state => state.books.error)
   const isLoading = useAppSelector(state => state.books.isLoading)
 
-  // const booksFromCart = getCartFromLocalStorage()
-
   useEffect(() => {
     totalPriceValue()
 
     if (books.length > 0) return
 
     dispatch(fetchNewBooks())
-  }, [bookState, books, cart])
+  }, [dispatch, books, cart])
 
   function totalPriceValue () {
     let totalPrice = 0

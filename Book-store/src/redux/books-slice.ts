@@ -27,8 +27,8 @@ export const fetchSearchBooks = createAsyncThunk('books/fetchSearchBooks', async
 
 const initialState: IBooksState = {
   list: [],
-  favourites: [],
-  cart: [],
+  favourites: getFavouritesFromLocalStorage() || [],
+  cart: getCartFromLocalStorage() || [],
   isLoading: false,
   error: null,
   pagesCount: null
@@ -49,7 +49,6 @@ export const booksSlice = createSlice({
       const isBookInFavourites = state.favourites.find((element) => element.id === bookId)
 
       if (isBookInFavourites) {
-        // state.list[bookIndex].isFavourite = !state.list[bookIndex].isFavourite
         state.favourites.splice(indexBookFromFavourites, 1)
       } else {
         state.list[bookIndex].isFavourite = !state.list[bookIndex].isFavourite
@@ -59,7 +58,6 @@ export const booksSlice = createSlice({
       setFavouritesToLocalSorage(state.favourites)
     },
     addBookToCart: (state, action: PayloadAction<string | undefined>) => {
-      // state.cart = getCartFromLocalStorage()
       const bookId = action.payload
 
       const bookIndex = state.list.findIndex(book => book.id === bookId)
@@ -80,7 +78,14 @@ export const booksSlice = createSlice({
         state.cart.push(bookItem)
       }
       setCartToLocalSorage(state.cart)
-      // state.cart = getCartFromLocalStorage()
+    },
+    removeBookFromCart: (state, action) => {
+      const bookId = action.payload
+
+      const bookIndex = state.cart.findIndex((book: IBook) => bookId === book.id)
+
+      state.cart.splice(bookIndex, 1)
+      setCartToLocalSorage(state.cart)
     },
     countIncrement: (state, action: PayloadAction<string | undefined>) => {
       state.cart = getCartFromLocalStorage()
@@ -117,8 +122,6 @@ export const booksSlice = createSlice({
       })
       .addCase(fetchNewBooks.fulfilled, (state, action) => {
         state.isLoading = false
-        state.favourites = getFavouritesFromLocalStorage()
-        state.cart = getCartFromLocalStorage()
 
         state.list = action.payload.books.map((book: IBook) => {
           return {
@@ -140,9 +143,6 @@ export const booksSlice = createSlice({
       .addCase(fetchSearchBooks.fulfilled, (state, action) => {
         state.isLoading = false
 
-        state.favourites = getFavouritesFromLocalStorage()
-        state.cart = getCartFromLocalStorage()
-
         state.list = action.payload.books.map((book: IBook) => {
           return {
             ...book,
@@ -162,6 +162,6 @@ export const booksSlice = createSlice({
   }
 })
 
-export const { toggleFavouriteById, addBookToCart, countIncrement, countDecrement } = booksSlice.actions
+export const { toggleFavouriteById, addBookToCart, countIncrement, countDecrement, removeBookFromCart } = booksSlice.actions
 
 export const booksReducer = booksSlice.reducer
