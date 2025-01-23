@@ -64,6 +64,14 @@ export const booksSlice = createSlice({
 
       const bookItem = state.list[bookIndex]
 
+      if (!bookItem) {
+        const bookFromFavourites = state.favourites.find(book => book.id === bookId)!
+
+        state.cart.push(bookFromFavourites)
+
+        return
+      }
+
       if (state.cart.length > 0) {
         const bookInCart = state.cart.find(book => book.id === bookId)
 
@@ -77,6 +85,7 @@ export const booksSlice = createSlice({
         bookItem.inCart = true
         state.cart.push(bookItem)
       }
+
       setCartToLocalSorage(state.cart)
     },
     removeBookFromCart: (state, action) => {
