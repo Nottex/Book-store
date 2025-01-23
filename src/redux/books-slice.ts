@@ -69,6 +69,8 @@ export const booksSlice = createSlice({
 
         state.cart.push(bookFromFavourites)
 
+        setCartToLocalSorage(state.cart)
+
         return
       }
 
